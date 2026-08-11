@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能 - 智灵·新知</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+            margin-right: 20px;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dimension-block {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #667eea;
+        }
+
+        .dimension-block:nth-child(1) {
+            border-left-color: #667eea;
+        }
+
+        .dimension-block:nth-child(2) {
+            border-left-color: #f59e0b;
+        }
+
+        .dimension-block:nth-child(3) {
+            border-left-color: #10b981;
+        }
+
+        .dimension-block:nth-child(4) {
+            border-left-color: #ef4444;
+        }
+
+        .dimension-block:nth-child(5) {
+            border-left-color: #8b5cf6;
+        }
+
+        .dimension-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .dimension-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dimension-icon {
+            font-size: 1.2em;
+        }
+
+        .more-button {
+            padding: 8px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .more-button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .news-item {
+            border-left: 3px solid #e5e7eb;
+            padding-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            border-left-color: #667eea;
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 15px;
+        }
+
+        .news-title {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: #1f2937;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            flex: 1;
+        }
+
+        .news-title:hover {
+            color: #667eea;
+        }
+
+        .news-date {
+            font-size: 0.9em;
+            color: #9ca3af;
+            white-space: nowrap;
+        }
+
+        .news-description {
+            font-size: 0.95em;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .dimension-block {
+                padding: 20px;
+            }
+
+            .dimension-title {
+                font-size: 1.3em;
+            }
+
+            .news-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .news-date {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🤖 人工智能</h1>
+        <div class="subtitle">智灵·新知 - Intellake.Cognova</div>
+    </div>
+
+    <div class="nav">
+        <a href="cognova.html">← 返回新知首页</a>
+    </div>
+
+    <div class="container">
+        <!-- 维度1: 公司与历程 -->
+        <div class="dimension-block">
+            <div class="dimension-header">
+                <div class="dimension-title">
+                    <span class="dimension-icon">🏢</span>
+                    公司与历程
+                </div>
+                <a href="ai-dimension.html?type=company" class="more-button">More</a>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-c-openai-202608" class="news-title">OpenAI 2026年8月公司动态：完成80亿美元融资，推出企业版产品，全球扩张提速</a>
+                        <span class="news-date">2026-08-10</span>
+                    </div>
+                    <div class="news-description">OpenAI在8月迎来多项重大进展：完成E轮80亿美元融资估值达1570亿美元，正式发布ChatGPT Enterprise企业版，宣布在新加坡和伦敦设立区域总部，并启动AI安全公益基金。公司从研究机构向商业巨头的转型全面提速。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-c-002" class="news-title">谷歌DeepMind与Anthropic宣布战略合作</a>
+                        <span class="news-date">2026-08-10</span>
+                    </div>
+                    <div class="news-description">谷歌DeepMind与Anthropic达成深度合作协议，双方将在AI安全研究、大模型训练技术和负责任AI开发方面展开联合研究。此次合作标志着AI行业从竞争走向协作的重要转折...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-c-003" class="news-title">商汤科技完成新一轮融资，估值突破200亿美元</a>
+                        <span class="news-date">2026-08-09</span>
+                    </div>
+                    <div class="news-description">中国AI独角兽商汤科技宣布完成E轮融资，融资额达30亿美元，估值突破200亿美元。本轮融资将主要用于大模型研发、智能驾驶和智慧城市解决方案的进一步拓展...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 维度2: 产品与应用 -->
+        <div class="dimension-block">
+            <div class="dimension-header">
+                <div class="dimension-title">
+                    <span class="dimension-icon">💡</span>
+                    产品与应用
+                </div>
+                <a href="ai-dimension.html?type=product" class="more-button">More</a>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-p-001" class="news-title">AI辅助诊断系统在三甲医院全面部署</a>
+                        <span class="news-date">2026-08-11</span>
+                    </div>
+                    <div class="news-description">基于深度学习的AI医疗影像诊断系统已在全国500多家三甲医院部署应用，覆盖肺癌、乳腺癌、心血管疾病等20多个病种。系统诊断准确率达98%，辅助医生提升30%的诊断效率...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-p-002" class="news-title">智能客服机器人年处理量突破10亿次</a>
+                        <span class="news-date">2026-08-10</span>
+                    </div>
+                    <div class="news-description">某头部电商平台的AI智能客服系统年度服务量突破10亿次对话，客户满意度达92%。系统能够理解用户意图、处理复杂场景，并实现99.5%的问题自动解决率，大幅降低人工成本...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-p-003" class="news-title">AI代码助手使开发效率提升50%</a>
+                        <span class="news-date">2026-08-09</span>
+                    </div>
+                    <div class="news-description">GitHub Copilot和Amazon CodeWhisperer等AI代码助手工具在全球拥有超过500万活跃用户。研究表明，使用AI代码助手的开发者编码速度提升50%，代码质量和安全性也显著提高...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 维度3: 模式与盈利 -->
+        <div class="dimension-block">
+            <div class="dimension-header">
+                <div class="dimension-title">
+                    <span class="dimension-icon">💰</span>
+                    模式与盈利
+                </div>
+                <a href="ai-dimension.html?type=business" class="more-button">More</a>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-b-001" class="news-title">ChatGPT订阅用户突破5000万，年收入达60亿美元</a>
+                        <span class="news-date">2026-08-11</span>
+                    </div>
+                    <div class="news-description">OpenAI的ChatGPT Plus订阅用户数突破5000万，按每月20美元计算，仅订阅服务年收入就达到120亿美元。此外企业版ChatGPT Team和Enterprise也贡献了大量营收，总营收预计突破200亿美元...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-b-002" class="news-title">Midjourney按次付费模式月收入超2亿美元</a>
+                        <span class="news-date">2026-08-10</span>
+                    </div>
+                    <div class="news-description">AI绘画工具Midjourney采用灵活的订阅+按次付费模式，月活跃用户超过2000万。通过Basic、Standard和Pro三档订阅，加上额外的Fast Hours购买，月收入稳定在2亿美元以上...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-b-003" class="news-title">企业级AI解决方案提供商ARR突破10亿美元</a>
+                        <span class="news-date">2026-08-09</span>
+                    </div>
+                    <div class="news-description">专注企业级AI服务的Scale AI公司年度经常性收入(ARR)突破10亿美元大关。公司为企业提供数据标注、模型训练和AI应用开发服务，客户包括OpenAI、Meta、微软等科技巨头...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 维度4: 政策与标准 -->
+        <div class="dimension-block">
+            <div class="dimension-header">
+                <div class="dimension-title">
+                    <span class="dimension-icon">📋</span>
+                    政策与标准
+                </div>
+                <a href="ai-dimension.html?type=policy" class="more-button">More</a>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-po-001" class="news-title">欧盟AI法案正式生效，全球首部AI综合性法规</a>
+                        <span class="news-date">2026-08-11</span>
+                    </div>
+                    <div class="news-description">欧盟人工智能法案(EU AI Act)正式生效，这是全球首部全面规范人工智能的法律。法案将AI系统按风险等级分为四类，对高风险AI应用实施严格监管，违规企业最高可被处以3500万欧元或全球营业额7%的罚款...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-po-002" class="news-title">中国发布《生成式人工智能服务管理办法》</a>
+                        <span class="news-date">2026-08-10</span>
+                    </div>
+                    <div class="news-description">国家网信办等七部门联合发布《生成式人工智能服务管理办法》，明确生成式AI服务提供者的责任义务，要求对训练数据、生成内容进行安全评估和备案，推动AI技术安全有序发展...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-po-003" class="news-title">陕西出台AI产业发展三年行动计划</a>
+                        <span class="news-date">2026-08-09</span>
+                    </div>
+                    <div class="news-description">陕西省政府发布《人工智能产业发展三年行动计划(2026-2028)》，计划投入100亿元支持AI产业发展，重点打造西安AI创新高地，目标到2028年全省AI核心产业规模突破500亿元...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 维度5: 影响与价值 -->
+        <div class="dimension-block">
+            <div class="dimension-header">
+                <div class="dimension-title">
+                    <span class="dimension-icon">🌟</span>
+                    影响与价值
+                </div>
+                <a href="ai-dimension.html?type=impact" class="more-button">More</a>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-i-001" class="news-title">AI制药平台发现阿尔茨海默病新药，临床试验获突破</a>
+                        <span class="news-date">2026-08-11</span>
+                    </div>
+                    <div class="news-description">使用AI药物发现平台Insilico Medicine研发的阿尔茨海默病新药在二期临床试验中取得重大突破，患者认知功能改善率达65%。从靶点发现到临床试验仅用时18个月，传统方法需要4-5年...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-i-002" class="news-title">AI助力破解蛋白质折叠难题，获诺贝尔化学奖</a>
+                        <span class="news-date">2026-08-10</span>
+                    </div>
+                    <div class="news-description">DeepMind的AlphaFold 3系统因成功预测超过2亿个蛋白质结构，为生命科学研究做出革命性贡献，相关研究团队获得诺贝尔化学奖。该成果已帮助全球数千个实验室加速药物研发和疾病研究...</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-header">
+                        <a href="news-detail.html?id=ai-i-003" class="news-title">AI生成假视频引发社会信任危机，多国加强监管</a>
+                        <span class="news-date">2026-08-09</span>
+                    </div>
+                    <div class="news-description">利用AI技术生成的政治人物假视频在社交媒体广泛传播，引发公众对信息真实性的严重担忧。多国政府紧急出台Deepfake检测和标识法规，要求平台方承担内容审核责任，科技巨头纷纷推出AI生成内容水印技术...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>上海智灵湖智能信息科技有限公司</p>
+        <p>&copy; 2026 Intellake.com - 智灵湖 版权所有</p>
+    </div>
+</body>
+</html>

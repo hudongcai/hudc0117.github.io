@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智灵湖 - Intellake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin: 60px 0 80px 0;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.5em;
+            opacity: 0.95;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .header .company {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .modules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 60px auto;
+            justify-items: center;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-card.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .module-card.active::before {
+            background: white;
+        }
+
+        .module-title {
+            font-size: 1.8em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .module-name-en {
+            font-size: 1.1em;
+            opacity: 0.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .module-status {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        .status-active {
+            background: #10b981;
+            color: white;
+        }
+
+        .module-card.active .status-active {
+            background: white;
+            color: #667eea;
+        }
+
+        .status-pending {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .module-card.active .status-pending {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .footer {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            opacity: 0.9;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .header .subtitle {
+                font-size: 1.2em;
+            }
+
+            .modules-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .module-card {
+                padding: 30px 25px;
+            }
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>智灵湖</h1>
+        <div class="subtitle">Intellake</div>
+    </div>
+
+    <div class="modules-container">
+        <a href="https://www.zhenwu.fun/" class="module-card active" target="_blank">
+            <span class="icon">🧭</span>
+            <div class="module-title">智灵·三谋</div>
+            <div class="module-name-en">Intellake.Nlsg</div>
+            <span class="module-status status-active">已上线</span>
+        </a>
+
+        <a href="cognova.html" class="module-card">
+            <span class="icon">💡</span>
+            <div class="module-title">智灵·新知</div>
+            <div class="module-name-en">Intellake.Cognova</div>
+            <span class="module-status status-pending">筹备中</span>
+        </a>
+
+        <div class="module-card">
+            <span class="icon">📋</span>
+            <div class="module-title">智灵·标书</div>
+            <div class="module-name-en">Intellake.Biding</div>
+            <span class="module-status status-pending">筹备中</span>
+        </div>
+
+        <div class="module-card">
+            <span class="icon">📿</span>
+            <div class="module-title">智灵·项链</div>
+            <div class="module-name-en">Intellake.Necklace</div>
+            <span class="module-status status-pending">筹备中</span>
+        </div>
+
+        <div class="module-card">
+            <span class="icon">📖</span>
+            <div class="module-title">智灵·小说</div>
+            <div class="module-name-en">Intellake.Novel</div>
+            <span class="module-status status-pending">筹备中</span>
+        </div>
+
+        <div class="module-card">
+            <span class="icon">🎮</span>
+            <div class="module-title">智灵·游戏</div>
+            <div class="module-name-en">Intellake.Game</div>
+            <span class="module-status status-pending">筹备中</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>上海智灵湖智能信息科技有限公司</p>
+        <p>&copy; 2026 Intellake.com - 智灵湖 版权所有</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资讯列表 - 智灵·新知</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+            margin-right: 20px;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .news-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1f2937;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .news-title:hover {
+            color: #667eea;
+        }
+
+        .news-date {
+            font-size: 0.9em;
+            color: #9ca3af;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+
+        .news-description {
+            font-size: 1em;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #667eea;
+            background: white;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .pagination a:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .pagination span.current {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .news-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .news-date {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="category-title">资讯列表</h1>
+        <div class="subtitle">智灵·新知</div>
+    </div>
+
+    <div class="nav">
+        <a href="cognova.html">← 返回新知首页</a>
+    </div>
+
+    <div class="container">
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=1" class="news-title">【占位符标题】资讯标题示例一</a>
+                <span class="news-date">2026-08-11</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=2" class="news-title">【占位符标题】资讯标题示例二</a>
+                <span class="news-date">2026-08-10</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=3" class="news-title">【占位符标题】资讯标题示例三</a>
+                <span class="news-date">2026-08-09</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=4" class="news-title">【占位符标题】资讯标题示例四</a>
+                <span class="news-date">2026-08-08</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=5" class="news-title">【占位符标题】资讯标题示例五</a>
+                <span class="news-date">2026-08-07</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=6" class="news-title">【占位符标题】资讯标题示例六</a>
+                <span class="news-date">2026-08-06</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=7" class="news-title">【占位符标题】资讯标题示例七</a>
+                <span class="news-date">2026-08-05</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=8" class="news-title">【占位符标题】资讯标题示例八</a>
+                <span class="news-date">2026-08-04</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=9" class="news-title">【占位符标题】资讯标题示例九</a>
+                <span class="news-date">2026-08-03</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-meta">
+                <a href="news-detail.html?id=10" class="news-title">【占位符标题】资讯标题示例十</a>
+                <span class="news-date">2026-08-02</span>
+            </div>
+            <div class="news-description">这里是资讯简介的占位符内容，用于展示资讯的主要信息摘要，帮助用户快速了解资讯的核心内容和价值...</div>
+        </div>
+
+        <div class="pagination">
+            <span class="current">1</span>
+            <a href="?page=2">2</a>
+            <a href="?page=3">3</a>
+            <a href="?page=4">4</a>
+            <a href="?page=5">5</a>
+            <a href="?page=2">下一页 →</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>上海智灵湖智能信息科技有限公司</p>
+        <p>&copy; 2026 Intellake.com - 智灵湖 版权所有</p>
+    </div>
+
+    <script>
+        // 根据URL参数设置分类标题
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const categoryNames = {
+            'international': '国际动态',
+            'domestic': '国内政治',
+            'industry': '产业生态',
+            'business': '商业案例',
+            'ai': '人工智能',
+            'elite': '典型精英',
+            'logic': '逻辑思维',
+            'cognition': '观念认知'
+        };
+
+        if (category && categoryNames[category]) {
+            document.getElementById('category-title').textContent = categoryNames[category] + ' - 资讯列表';
+        }
+    </script>
+</body>
+</html>
