@@ -303,6 +303,7 @@
             <div class="article-meta">
                 <span>📅 发布日期：2026-08-12</span>
                 <span>📂 分类：公司与历程</span>
+                <span>👁️ 阅读量：<span id="view-count">加载中...</span></span>
             </div>
 
             <div class="article-summary">
@@ -445,5 +446,34 @@
         <p>上海智灵湖智能信息科技有限公司</p>
         <p>&copy; 2026 Intellake.com - 智灵湖 版权所有</p>
     </div>
+
+    <script>
+        // 文章ID
+        const articleId = 'ai-c-tencent-20260812';
+
+        // 获取并更新阅读量
+        function updateViewCount() {
+            // 从localStorage获取所有文章的阅读量
+            let viewData = localStorage.getItem('article-views');
+            let views = viewData ? JSON.parse(viewData) : {};
+
+            // 检查是否已经阅读过（使用sessionStorage避免刷新重复计数）
+            const hasViewed = sessionStorage.getItem('viewed-' + articleId);
+
+            if (!hasViewed) {
+                // 首次访问，增加阅读量
+                views[articleId] = (views[articleId] || 0) + 1;
+                localStorage.setItem('article-views', JSON.stringify(views));
+                sessionStorage.setItem('viewed-' + articleId, 'true');
+            }
+
+            // 显示阅读量
+            const count = views[articleId] || 0;
+            document.getElementById('view-count').textContent = count.toLocaleString();
+        }
+
+        // 页面加载时更新阅读量
+        updateViewCount();
+    </script>
 </body>
 </html>
