@@ -1,0 +1,16 @@
+{
+  "name": "intellake-auto-update",
+  "version": "1.0.0",
+  "description": "自动更新智灵湖AI新闻",
+  "main": "scripts/auto-update-ai-news.js",
+  "scripts": {
+    "update": "node scripts/auto-update-ai-news.js",
+    "test": "node scripts/auto-update-ai-news.js"
+  },
+  "keywords": ["ai", "news", "automation"],
+  "author": "Intellake",
+  "license": "MIT",
+  "dependencies": {
+    "node-cron": "^3.0.2"
+  }
+}
