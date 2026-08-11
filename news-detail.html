@@ -347,6 +347,10 @@
         const articleId = urlParams.get('id');
 
         // 如果是特定的文章ID，跳转到对应的独立页面
+        if (articleId === 'ai-c-tencent-20260812') {
+            window.location.href = 'news-detail-ai-c-tencent-20260812.html';
+        }
+        
         if (articleId === 'ai-c-openai-202608') {
             window.location.href = 'news-detail-ai-c-openai-202608.html';
         }
