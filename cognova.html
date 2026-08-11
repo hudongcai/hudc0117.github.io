@@ -185,15 +185,90 @@
         @media (max-width: 1024px) {
             .modules-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 15px;
+            }
+
+            .header {
+                padding: 25px 15px;
             }
 
             .header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
+            }
+
+            .header .subtitle {
+                font-size: 1em;
+            }
+
+            .container {
+                padding: 15px;
             }
 
             .module {
-                padding: 25px;
+                padding: 20px;
+            }
+
+            .module-title {
+                font-size: 1.3em;
+            }
+
+            .module-icon {
+                font-size: 1em;
+            }
+
+            .news-title {
+                font-size: 0.95em;
+            }
+
+            .news-description {
+                font-size: 0.8em;
+            }
+
+            .news-date {
+                font-size: 0.8em;
+            }
+
+            .more-button {
+                padding: 5px 15px;
+                font-size: 0.85em;
+            }
+
+            .nav {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+
+            .footer {
+                padding: 20px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .header .subtitle {
+                font-size: 0.9em;
+            }
+
+            .module {
+                padding: 15px;
+            }
+
+            .module-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .more-button {
+                align-self: flex-end;
+            }
+
+            .news-item {
+                padding-left: 12px;
             }
         }
     </style>

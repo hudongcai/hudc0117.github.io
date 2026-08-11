@@ -156,21 +156,59 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                margin: 30px 0 40px 0;
+            }
+
             .header h1 {
-                font-size: 2.5em;
+                font-size: 2em;
             }
 
             .header .subtitle {
-                font-size: 1.2em;
+                font-size: 1em;
+                letter-spacing: 1px;
+            }
+
+            .header .company {
+                font-size: 0.9em;
             }
 
             .modules-container {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 15px;
+                margin-bottom: 30px;
             }
 
             .module-card {
-                padding: 30px 25px;
+                padding: 25px 20px;
+                max-width: 100%;
+            }
+
+            .icon {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+
+            .module-title {
+                font-size: 1.4em;
+            }
+
+            .module-name-en {
+                font-size: 0.95em;
+            }
+
+            .module-status {
+                font-size: 0.85em;
+                padding: 5px 12px;
+            }
+
+            .footer {
+                padding: 15px 10px;
+                font-size: 0.9em;
             }
         }
 

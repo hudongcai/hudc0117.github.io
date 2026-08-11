@@ -192,12 +192,54 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .header .subtitle {
+                font-size: 0.9em;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
             .dimension-block {
-                padding: 20px;
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+
+            .dimension-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 20px;
             }
 
             .dimension-title {
-                font-size: 1.3em;
+                font-size: 1.2em;
+            }
+
+            .dimension-icon {
+                font-size: 1em;
+            }
+
+            .more-button {
+                align-self: flex-end;
+                padding: 6px 16px;
+                font-size: 0.85em;
+            }
+
+            .news-list {
+                gap: 15px;
+            }
+
+            .news-item {
+                padding-left: 15px;
             }
 
             .news-header {
@@ -205,8 +247,45 @@
                 gap: 8px;
             }
 
+            .news-title {
+                font-size: 1em;
+            }
+
             .news-date {
                 align-self: flex-start;
+                font-size: 0.85em;
+            }
+
+            .news-description {
+                font-size: 0.9em;
+            }
+
+            .nav {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+
+            .footer {
+                padding: 20px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4em;
+            }
+
+            .dimension-block {
+                padding: 15px 12px;
+            }
+
+            .dimension-title {
+                font-size: 1.1em;
+            }
+
+            .news-title {
+                font-size: 0.95em;
             }
         }
     </style>
