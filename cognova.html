@@ -69,7 +69,7 @@
         .module {
             background: white;
             border-radius: 10px;
-            padding: 18px;
+            padding: 15px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
         }
@@ -81,15 +81,15 @@
 
         .module-header {
             border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            margin-bottom: 12px;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .module-title {
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 600;
             color: #667eea;
             display: flex;
@@ -104,7 +104,7 @@
         .news-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .news-item {
@@ -119,29 +119,35 @@
             padding-left: 15px;
         }
 
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
         .news-title {
-            font-size: 0.95em;
+            font-size: 0.9em;
             font-weight: 600;
             color: #1f2937;
-            margin-bottom: 5px;
             cursor: pointer;
             transition: color 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
         }
 
         .news-title:hover {
             color: #667eea;
         }
 
-        .news-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
         .news-date {
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #9ca3af;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .news-description {
