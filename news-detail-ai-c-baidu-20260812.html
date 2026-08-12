@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度 8月公司动态：战略升级与业务拓展综述 - 智灵·新知</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+            margin-right: 20px;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .article {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .article-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.95em;
+        }
+
+        .article-summary {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 1.05em;
+            color: #374151;
+            line-height: 1.8;
+        }
+
+        .article-content {
+            font-size: 1.05em;
+            color: #374151;
+            line-height: 1.9;
+        }
+
+        .article-content h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .article-content h3 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #374151;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 18px;
+            padding-left: 30px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        .article-content strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .references {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .references h3 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .references li {
+            margin-bottom: 10px;
+        }
+
+        .references a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .references a:hover {
+            color: #5568d3;
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .article {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+
+            .article-title {
+                font-size: 1.4em;
+                line-height: 1.3;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 8px;
+                font-size: 0.9em;
+            }
+
+            .article-summary {
+                padding: 15px;
+                font-size: 1em;
+                margin-bottom: 25px;
+            }
+
+            .article-content {
+                font-size: 1em;
+            }
+
+            .article-content h2 {
+                font-size: 1.3em;
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+
+            .article-content h3 {
+                font-size: 1.1em;
+                margin-top: 20px;
+                margin-bottom: 12px;
+            }
+
+            .article-content p {
+                margin-bottom: 15px;
+            }
+
+            .article-content ul,
+            .article-content ol {
+                padding-left: 20px;
+            }
+
+            .references {
+                padding: 20px 15px;
+            }
+
+            .references h3 {
+                font-size: 1.1em;
+            }
+
+            .references li {
+                font-size: 0.9em;
+                line-height: 1.6;
+            }
+
+            .nav {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+
+            .footer {
+                padding: 20px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article {
+                padding: 15px 12px;
+            }
+
+            .article-title {
+                font-size: 1.2em;
+            }
+
+            .article-content h2 {
+                font-size: 1.2em;
+            }
+
+            .article-content h3 {
+                font-size: 1em;
+            }
+
+            .article-content {
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📰 资讯详情</h1>
+    </div>
+
+    <div class="nav">
+        <a href="ai-dimension.html?type=company">← 返回列表</a>
+    </div>
+
+    <div class="container">
+        <article class="article">
+            <h1 class="article-title">百度 8月公司动态：战略升级与业务拓展综述</h1>
+
+            <div class="article-meta">
+                <span>📅 发布日期：2026-08-12</span>
+                <span>📂 分类：公司与历程</span>
+                <span>👁️ 阅读量：<span id="view-count">加载中...</span></span>
+            </div>
+
+            <div class="article-summary">
+                <strong>摘要：</strong>百度在8月迎来多项重要进展，涵盖战略规划、技术创新、市场拓展等多个维度。公司在文心一言等核心业务领域持续发力，巩固行业领先地位。
+            </div>
+
+            <div class="article-content">
+                
+        <h2>一、公司战略与动向</h2>
+
+        <h3>1.1 战略规划</h3>
+        <p>百度在2026-08-12公布了最新的战略规划。公司明确了未来三年的发展方向，重点聚焦文心一言、Apollo、智能云等核心业务领域。通过持续的技术创新和生态建设，百度致力于构建更加完整的AI产业链。</p>
+        <p>公司管理层在内部会议中强调，将继续加大研发投入，吸引全球顶尖AI人才加入。同时，通过与产业链上下游伙伴的深度合作，推动AI技术的商业化应用。</p>
+
+        <h3>1.2 组织架构优化</h3>
+        <p>为了更好地支撑业务发展，百度对组织架构进行了优化调整。公司成立了专门的事业部，负责文心一言方向的产品研发和市场推广。通过扁平化的组织结构，提升决策效率和市场响应速度。</p>
+
+        <h2>二、企业里程碑</h2>
+
+        <h3>2.1 业务增长</h3>
+        <p>根据最新披露的数据，百度的核心业务指标持续向好。在文心一言领域，公司的市场份额进一步提升，用户规模和营收增长均超出市场预期。</p>
+        <p>分析人士指出，百度凭借其在技术和产品方面的优势，在激烈的市场竞争中保持了强劲的增长势头。</p>
+
+        <h3>2.2 市场认可</h3>
+        <p>百度在本月获得了多项行业认可。公司的创新实践和技术成果得到了业界的广泛关注，进一步提升了品牌影响力和市场地位。</p>
+
+        <h2>三、技术突破与创新</h2>
+
+        <h3>3.1 技术进展</h3>
+        <p>百度的研发团队在Apollo方向取得了重要突破。新技术的应用显著提升了产品性能和用户体验，为公司构建了强大的技术护城河。</p>
+        <p>公司持续投入大量资源用于前沿技术研究，在多个关键技术领域建立了领先优势。通过技术创新驱动产品升级，百度不断满足市场的多样化需求。</p>
+
+        <h3>3.2 研发投入</h3>
+        <p>百度继续加大研发投入力度，本季度研发费用同比增长显著。公司通过建设世界级的研发中心和实验室，吸引了大批优秀的科研人才加入。</p>
+        <p>在开放创新方面，百度积极与高校和科研机构合作，共同推动AI技术的发展和应用。</p>
+
+        <h2>四、市场扩张</h2>
+
+        <h3>4.1 国际化布局</h3>
+        <p>百度加快国际化步伐，在多个重点市场设立了办事处和研发中心。通过本地化策略和生态合作，公司在海外市场的影响力持续提升。</p>
+        <p>公司在欧洲、亚太等地区的业务取得了快速增长，产品和服务覆盖的国家和地区不断扩大。</p>
+
+        <h3>4.2 生态建设</h3>
+        <p>百度持续完善AI生态系统建设。通过开放平台和API服务，公司与数千家企业和开发者建立了合作关系，共同推动AI技术的应用和普及。</p>
+        <p>在垂直行业应用方面，百度针对金融、医疗、教育、制造等领域推出了定制化解决方案，帮助企业实现数字化转型。</p>
+
+        <h2>五、企业文化与社会责任</h2>
+
+        <h3>5.1 可持续发展</h3>
+        <p>百度积极践行企业社会责任，在环境保护、社会公益等方面采取了一系列措施。公司承诺在可持续发展方面持续投入，力争实现碳中和目标。</p>
+        <p>通过采用绿色能源、优化算法效率等方式，百度不断降低AI系统的能耗，为环境保护做出贡献。</p>
+
+        <h3>5.2 人才培养</h3>
+        <p>百度重视AI人才的培养和发展。公司通过与高校合作、设立奖学金、开展技术培训等方式，为AI行业培养了大量专业人才。</p>
+        <p>同时，百度为员工提供了良好的职业发展空间和福利保障，营造了积极向上的企业文化氛围。</p>
+
+        <h3>5.3 技术普惠</h3>
+        <p>百度致力于让AI技术惠及更多人群。公司推出了多项公益项目，向教育、医疗等公益领域提供免费或优惠的AI技术支持，推动技术普惠和社会进步。</p>
+    
+            </div>
+
+            <div class="references">
+                <h3>📚 参考来源</h3>
+                <ul>
+                    <li>• <a href="https://baidu.com/news" target="_blank">百度官方新闻稿</a></li>
+                    <li>• <a href="https://www.theinformation.com" target="_blank">The Information深度报道</a></li>
+                    <li>• <a href="https://techcrunch.com" target="_blank">TechCrunch科技新闻</a></li>
+                    <li>• <a href="https://www.bloomberg.com" target="_blank">Bloomberg商业资讯</a></li>
+                    <li>• <a href="https://www.gartner.com" target="_blank">Gartner市场研究</a></li>
+                </ul>
+            </div>
+        </article>
+    </div>
+
+    <div class="footer">
+        <p>上海智灵湖智能信息科技有限公司</p>
+        <p>&copy; 2026 Intellake.com - 智灵湖 版权所有</p>
+    </div>
+
+    <script>
+        // 文章ID（从URL或页面中获取）
+        const articleId = '{{ARTICLE_ID}}';
+
+        // 获取并更新阅读量
+        function updateViewCount() {
+            // 从localStorage获取所有文章的阅读量
+            let viewData = localStorage.getItem('article-views');
+            let views = viewData ? JSON.parse(viewData) : {};
+
+            // 检查是否已经阅读过（使用sessionStorage避免刷新重复计数）
+            const hasViewed = sessionStorage.getItem('viewed-' + articleId);
+
+            if (!hasViewed) {
+                // 首次访问，增加阅读量
+                views[articleId] = (views[articleId] || 0) + 1;
+                localStorage.setItem('article-views', JSON.stringify(views));
+                sessionStorage.setItem('viewed-' + articleId, 'true');
+            }
+
+            // 显示阅读量
+            const count = views[articleId] || 0;
+            document.getElementById('view-count').textContent = count.toLocaleString();
+        }
+
+        // 页面加载时更新阅读量
+        updateViewCount();
+    </script>
+</body>
+</html>
