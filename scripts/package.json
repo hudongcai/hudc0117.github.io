@@ -1,0 +1,12 @@
+{
+  "name": "intellake-scripts",
+  "version": "1.0.0",
+  "description": "Intellake auto-update scripts",
+  "main": "auto-update-ai-news.js",
+  "scripts": {
+    "update": "node auto-update-ai-news.js"
+  },
+  "dependencies": {},
+  "author": "Intellake",
+  "license": "MIT"
+}
