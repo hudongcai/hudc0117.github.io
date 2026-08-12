@@ -270,7 +270,8 @@ function generateArticleId(company, date) {
 // 生成高质量文章内容
 function generateHighQualityArticle(company, template, date) {
     const title = template.title;
-    const summary = template.sections[0].subsections[0].content.substring(0, 200) + '...';
+    // 移除换行符，确保summary是单行文本
+    const summary = template.sections[0].subsections[0].content.replace(/\n/g, '').substring(0, 200) + '...';
 
     let contentHtml = '';
     template.sections.forEach(section => {
