@@ -1,0 +1,74 @@
+{
+  "companies": [
+    {
+      "name": "anthropic",
+      "nameZh": "Anthropic",
+      "founded": "2021",
+      "mainProduct": "Claude AI助手",
+      "description": "AI安全研究公司，开发Claude大语言模型"
+    },
+    {
+      "name": "openai",
+      "nameZh": "OpenAI",
+      "founded": "2015",
+      "mainProduct": "ChatGPT和GPT系列模型",
+      "description": "人工智能研究实验室，开发先进的AI系统"
+    },
+    {
+      "name": "google-deepmind",
+      "nameZh": "Google DeepMind",
+      "founded": "2010",
+      "mainProduct": "Gemini AI模型",
+      "description": "AI研究公司，专注于通用人工智能"
+    },
+    {
+      "name": "microsoft",
+      "nameZh": "微软",
+      "founded": "1975",
+      "mainProduct": "Windows、Azure、Microsoft 365",
+      "description": "全球领先的科技公司，提供软件、云服务和AI解决方案"
+    },
+    {
+      "name": "apple",
+      "nameZh": "苹果",
+      "founded": "1976",
+      "mainProduct": "iPhone、Mac、iPad",
+      "description": "消费电子和软件公司，以创新设计著称"
+    },
+    {
+      "name": "meta",
+      "nameZh": "Meta",
+      "founded": "2004",
+      "mainProduct": "Facebook、Instagram、WhatsApp",
+      "description": "社交媒体和元宇宙技术公司"
+    },
+    {
+      "name": "amazon",
+      "nameZh": "亚马逊",
+      "founded": "1994",
+      "mainProduct": "电商平台、AWS云服务",
+      "description": "全球最大的电商和云计算服务提供商"
+    },
+    {
+      "name": "nvidia",
+      "nameZh": "英伟达",
+      "founded": "1993",
+      "mainProduct": "GPU、AI芯片",
+      "description": "图形处理和AI计算领域的领导者"
+    },
+    {
+      "name": "tesla",
+      "nameZh": "特斯拉",
+      "founded": "2003",
+      "mainProduct": "电动汽车、自动驾驶",
+      "description": "电动汽车和清洁能源公司"
+    },
+    {
+      "name": "spacex",
+      "nameZh": "SpaceX",
+      "founded": "2002",
+      "mainProduct": "火箭发射、星链卫星",
+      "description": "私营航空航天制造商和太空运输公司"
+    }
+  ]
+}

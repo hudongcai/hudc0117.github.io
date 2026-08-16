@@ -1,0 +1,9 @@
+{
+  "mode": "daily",
+  "dailyTime": "08:00",
+  "cronExpression": "",
+  "model": "haiku",
+  "autoUpdate": true,
+  "notification": false,
+  "enabled": true
+}

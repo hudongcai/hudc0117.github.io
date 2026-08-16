@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": "task-default-1",
+      "name": "公司与历程 - 每日更新",
+      "dimensionId": "company",
+      "templateId": "company-article-template",
+      "schedule": "daily",
+      "scheduleTime": "08:00",
+      "model": "haiku",
+      "enabled": true,
+      "autoUpdate": true,
+      "createdAt": "2026-08-15T09:04:15.310Z",
+      "cronExpression": "",
+      "updatedAt": "2026-08-16T08:19:00.000Z",
+      "apiProfileId": ""
+    }
+  ]
+}

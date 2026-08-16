@@ -1,0 +1,100 @@
+{
+  "modules": [
+    {
+      "id": "international",
+      "name": "国际动态",
+      "icon": "🌍",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "domestic",
+      "name": "国内政治",
+      "icon": "🏛️",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "industry",
+      "name": "产业生态",
+      "icon": "🏭",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "business-case",
+      "name": "商业案例",
+      "icon": "💼",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "人工智能",
+      "icon": "🤖",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "elite",
+      "name": "典型精英",
+      "icon": "⭐",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "logic",
+      "name": "逻辑思维",
+      "icon": "🧠",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    },
+    {
+      "id": "cognition",
+      "name": "观念认知",
+      "icon": "💭",
+      "types": [
+        { "id": "company", "name": "公司与历程", "icon": "🏢" },
+        { "id": "product", "name": "产品与应用", "icon": "💡" },
+        { "id": "business", "name": "模式与盈利", "icon": "💰" },
+        { "id": "policy", "name": "政策与标准", "icon": "📋" },
+        { "id": "impact", "name": "影响与价值", "icon": "🌟" }
+      ]
+    }
+  ]
+}

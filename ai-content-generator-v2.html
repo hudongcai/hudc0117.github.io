@@ -1,0 +1,3568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容生成工具 - 智灵·新知</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .header-left .subtitle {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .main-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #f3f4f6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .control-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .panel-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 0.95em;
+        }
+
+        .form-select, .form-input, .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .form-textarea {
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .form-select:focus, .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .task-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .task-card.active {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .task-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .task-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-enabled {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-disabled {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .task-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .task-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-detail-label {
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .task-detail-value {
+            color: #1f2937;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .task-actions .btn {
+            flex: 0 0 auto;
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #0c4a6e;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #92400e;
+        }
+
+        .mapping-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .mapping-table th,
+        .mapping-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .mapping-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .mapping-table tr:hover {
+            background: #f9fafb;
+        }
+
+        /* 进度监控面板 */
+        .progress-monitor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .progress-monitor.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .progress-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .progress-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .progress-close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .progress-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-body {
+            padding: 25px;
+        }
+
+        .company-info-box {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .company-info-item {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .company-info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .company-info-label {
+            font-weight: 600;
+            color: #6b7280;
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .company-info-value {
+            color: #1f2937;
+        }
+
+        .progress-bar-container {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.95em;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .subsection-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .subsection-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #f9fafb;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .subsection-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection-item.generating {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .subsection-item.completed {
+            background: #d1fae5;
+            border-left: 3px solid #10b981;
+        }
+
+        .subsection-number {
+            font-weight: 700;
+            color: #667eea;
+            width: 60px;
+            flex-shrink: 0;
+        }
+
+        .subsection-title {
+            flex: 1;
+            color: #374151;
+        }
+
+        .subsection-status {
+            font-size: 1.2em;
+        }
+
+        .log-container {
+            background: #1f2937;
+            color: #f3f4f6;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-item {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .status-badge.generating {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* 文章管理样式 */
+        .article-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .article-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .article-title-section {
+            flex: 1;
+        }
+
+        .article-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .article-actions .btn {
+            flex: 0 0 auto;
+            padding: 8px 16px;
+            font-size: 0.85em;
+        }
+
+        .article-preview {
+            background: #f9fafb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.9em;
+            color: #4b5563;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .article-preview.visible {
+            display: block;
+        }
+
+        /* 文章统计样式 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .module-section {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .module-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .module-section-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .module-section-count {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .article-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .badge-module {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-type {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* 文章编辑器模态框 */
+        .editor-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            overflow-y: auto;
+        }
+
+        .editor-modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .editor-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin: 20px auto;
+        }
+
+        .editor-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .editor-body {
+            padding: 25px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .editor-metadata {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .editor-metadata h3 {
+            font-size: 1.1em;
+            color: #374151;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .editor-metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .editor-metadata-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-metadata-label {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 6px;
+        }
+
+        .editor-metadata-select {
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .editor-metadata-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .editor-textarea {
+            width: 100%;
+            min-height: 500px;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .editor-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .editor-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .main-tabs {
+                flex-direction: column;
+            }
+
+            .task-details {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-content {
+                margin: 10px;
+            }
+
+            .article-header {
+                flex-direction: column;
+            }
+
+            .article-actions {
+                margin-top: 10px;
+            }
+        }
+
+        /* 自定义确认对话框样式 */
+        .custom-confirm-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .custom-confirm-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            animation: slideIn 0.3s ease;
+        }
+
+        .custom-confirm-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .custom-confirm-title {
+            font-size: 1.3em;
+            color: #1f2937;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .custom-confirm-body {
+            padding: 25px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .custom-confirm-info {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .custom-confirm-info-item {
+            display: flex;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .custom-confirm-info-label {
+            font-weight: 600;
+            color: #374151;
+            min-width: 90px;
+        }
+
+        .custom-confirm-info-value {
+            color: #6b7280;
+            flex: 1;
+        }
+
+        .custom-confirm-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .custom-confirm-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-confirm-btn-cancel {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .custom-confirm-btn-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .custom-confirm-btn-confirm {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .custom-confirm-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -48%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <h1>⚙️ 内容生成配置</h1>
+            <div class="subtitle">统一管理生成任务、子模块和模板</div>
+        </div>
+        <div class="header-right">
+            <a href="ai-module.html" class="header-btn">← 返回新知</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 主选项卡 -->
+        <div class="main-tabs">
+            <button class="tab-btn active" onclick="switchTab('articles')">📚 文章管理</button>
+            <button class="tab-btn" onclick="switchTab('tasks')">📋 任务配置</button>
+            <button class="tab-btn" onclick="switchTab('dimensions')">📑 子模块管理</button>
+            <button class="tab-btn" onclick="switchTab('templates')">📝 模板管理</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ 系统设置</button>
+        </div>
+
+        <!-- 文章管理 -->
+        <div id="tab-articles" class="tab-content active">
+            <div class="control-panel">
+                <div class="panel-title">📚 文章管理中心</div>
+
+                <div class="info-box">
+                    💡 <strong>智灵·新知内容体系：</strong>8个子模块 × 5个子类型 = 40个内容维度。在此管理所有文章的查看、编辑、删除和分类。
+                </div>
+
+                <!-- 模块和类型选择器 -->
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div style="flex: 1;">
+                        <label class="form-label">📂 选择子模块</label>
+                        <select id="moduleFilter" class="form-select" onchange="filterArticles()">
+                            <option value="">全部模块 (8个)</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="form-label">📑 选择子类型</label>
+                        <select id="typeFilter" class="form-select" onchange="filterArticles()">
+                            <option value="">全部类型 (5个)</option>
+                            <option value="company">🏢 公司与历程</option>
+                            <option value="product">💡 产品与应用</option>
+                            <option value="business">💰 模式与盈利</option>
+                            <option value="policy">📋 政策与标准</option>
+                            <option value="impact">🌟 影响与价值</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="loadArticleManagement()">
+                        🔄 刷新列表
+                    </button>
+                    <button class="btn btn-primary" onclick="showArticleStats()">
+                        📊 统计概览
+                    </button>
+                    <button class="btn btn-success" onclick="openArticlesFolder()">
+                        📁 打开文章目录
+                    </button>
+                </div>
+
+                <!-- 文章统计概览 -->
+                <div id="articleStats" style="margin-top: 20px; display: none;"></div>
+
+                <!-- 文章列表 -->
+                <div id="articleList" class="task-list" style="margin-top: 20px;">
+                    <!-- 动态加载文章列表 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务配置 -->
+        <div id="tab-tasks" class="tab-content">
+            <div class="control-panel">
+                <div class="panel-title">📋 生成任务配置</div>
+
+                <div class="info-box">
+                    💡 <strong>统一任务管理：</strong>为每个子模块配置生成任务，指定使用的模板、执行时间等。系统将按照配置自动生成内容。
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="createNewTask()">
+                        ➕ 创建新任务
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadTasks()">
+                        🔄 刷新列表
+                    </button>
+                </div>
+
+                <div id="taskList" class="task-list" style="margin-top: 20px;">
+                    <!-- 动态加载任务列表 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 子模块管理 -->
+        <div id="tab-dimensions" class="tab-content">
+            <div class="control-panel">
+                <div class="panel-title">📑 子模块管理</div>
+
+                <div class="info-box">
+                    💡 <strong>子模块：</strong>定义内容分类维度（如：公司与历程、产品与应用等），每个子模块可以有独立的生成任务。
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="addNewDimension()">
+                        ➕ 新增子模块
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadDimensions()">
+                        🔄 刷新列表
+                    </button>
+                </div>
+
+                <table class="mapping-table" id="dimensionTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">模块ID</th>
+                            <th style="width: 15%;">图标</th>
+                            <th style="width: 25%;">名称</th>
+                            <th style="width: 30%;">描述</th>
+                            <th style="width: 15%;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dimensionTableBody">
+                        <!-- 动态加载 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 模板管理 -->
+        <div id="tab-templates" class="tab-content">
+            <div class="control-panel">
+                <div class="panel-title">📝 生成模板管理</div>
+
+                <div class="info-box">
+                    💡 <strong>生成模板：</strong>定义文章生成的内容框架和结构，包括章节、提示词等。每个任务可以选择不同的模板。
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="createNewTemplate()">
+                        ➕ 创建新模板
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadTemplates()">
+                        🔄 刷新列表
+                    </button>
+                </div>
+
+                <table class="mapping-table" id="templateTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">模板名称</th>
+                            <th style="width: 10%;">版本</th>
+                            <th style="width: 30%;">描述</th>
+                            <th style="width: 35%;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="templateTableBody">
+                        <!-- 动态加载 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 系统设置 -->
+        <div id="tab-settings" class="tab-content">
+            <div class="control-panel">
+                <div class="panel-title">⚙️ 系统设置</div>
+
+                <div class="info-box">
+                    💡 <strong>API配置：</strong>配置 AI API 提供商和密钥用于调用大语言模型生成内容。支持保存多个配置方案并快速切换。
+                </div>
+
+                <!-- 方案选择 -->
+                <div class="form-group">
+                    <label class="form-label">📦 配置方案</label>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="configProfileSelect" class="form-select" onchange="loadProfile()" style="flex: 1;">
+                            <option value="">➕ 新建方案</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="deleteProfile()" style="padding: 10px 20px;">🗑️ 删除</button>
+                    </div>
+                </div>
+
+                <!-- 方案名称 -->
+                <div class="form-group">
+                    <label class="form-label">📝 方案名称</label>
+                    <input type="text"
+                           id="profileNameInput"
+                           class="form-input"
+                           placeholder="例如：Anthropic官方、DeepSeek国内">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🌐 API 提供商</label>
+                    <select id="apiProviderSelect" class="form-select" onchange="onProviderChange()">
+                        <option value="anthropic">Anthropic (Claude)</option>
+                        <option value="deepseek">DeepSeek</option>
+                        <option value="custom">自定义</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🔗 API 端点 (Base URL)</label>
+                    <input type="text"
+                           id="apiBaseUrlInput"
+                           class="form-input"
+                           placeholder="https://api.anthropic.com"
+                           style="font-family: monospace;">
+                    <div style="margin-top: 8px; font-size: 0.85em; color: #6b7280;" id="baseUrlHint">
+                        💡 API 请求的基础地址
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🔑 API Key</label>
+                    <input type="password"
+                           id="apiKeyInput"
+                           class="form-input"
+                           placeholder="sk-ant-api03-xxxxxxxx"
+                           style="font-family: monospace;">
+                    <div style="margin-top: 8px; font-size: 0.85em; color: #6b7280;" id="apiKeyHint">
+                        💡 从 <a href="https://console.anthropic.com/" target="_blank" style="color: #667eea;">Anthropic Console</a> 获取 API Key
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🤖 默认模型</label>
+                    <input type="text"
+                           id="defaultModelInput"
+                           class="form-input"
+                           placeholder="claude-haiku-4-5-20251001"
+                           style="font-family: monospace;">
+                    <div style="margin-top: 8px; font-size: 0.85em; color: #6b7280;">
+                        💡 生成任务使用的默认模型名称
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="saveProfile()">
+                        💾 保存方案
+                    </button>
+                    <button class="btn btn-secondary" onclick="testApiConnection()">
+                        🔌 测试连接
+                    </button>
+                    <button class="btn btn-success" onclick="setAsActive()">
+                        ✅ 设为当前
+                    </button>
+                </div>
+
+                <div id="apiTestResult" style="margin-top: 20px; display: none;"></div>
+
+                <!-- 当前使用的配置 -->
+                <div style="margin-top: 30px; padding: 15px; background: #f3f4f6; border-radius: 8px;">
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #374151;">📌 当前使用的配置</div>
+                    <div id="activeProfileDisplay" style="font-size: 0.9em; color: #6b7280;">
+                        未配置
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 进度监控面板 -->
+    <div id="progressMonitor" class="progress-monitor">
+        <div class="progress-content">
+            <div class="progress-header">
+                <h2>📊 生成进度监控</h2>
+                <button class="progress-close-btn" onclick="closeProgressMonitor()">✕ 关闭</button>
+            </div>
+            <div class="progress-body">
+                <div id="statusBadgeContainer" style="text-align: center; margin-bottom: 15px;">
+                    <span class="status-badge generating" id="progressStatusBadge">生成中...</span>
+                </div>
+
+                <div class="company-info-box" id="companyInfoBox" style="display: none;">
+                    <div class="company-info-item">
+                        <span class="company-info-label">公司名称：</span>
+                        <span class="company-info-value" id="progressCompanyName">-</span>
+                    </div>
+                    <div class="company-info-item">
+                        <span class="company-info-label">创立时间：</span>
+                        <span class="company-info-value" id="progressCompanyFounded">-</span>
+                    </div>
+                    <div class="company-info-item">
+                        <span class="company-info-label">主营产品：</span>
+                        <span class="company-info-value" id="progressCompanyProduct">-</span>
+                    </div>
+                    <div class="company-info-item">
+                        <span class="company-info-label">文章ID：</span>
+                        <span class="company-info-value" id="progressArticleId">-</span>
+                    </div>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBarFill" style="width: 0%;">0%</div>
+                </div>
+
+                <div class="progress-text" id="progressText">
+                    准备开始生成...
+                </div>
+
+                <div class="subsection-list" id="progressSubsectionList">
+                    <!-- 动态填充 -->
+                </div>
+
+                <!-- 实时内容预览 -->
+                <div style="margin-top: 20px;">
+                    <h3 style="color: #374151; margin-bottom: 15px; font-size: 1.1em;">📄 Generated Content Preview</h3>
+                    <div id="contentPreview" style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; max-height: 400px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #1f2937;">
+                        <p style="color: #9ca3af; text-align: center; padding: 40px 0;">Waiting for content generation...</p>
+                    </div>
+                </div>
+
+                <div style="position: relative; margin-top: 20px;">
+                    <div class="log-container" id="progressLogContainer">
+                        <!-- 日志信息 -->
+                    </div>
+                    <button onclick="copyLogs()" style="position: absolute; top: 10px; right: 10px; background: #374151; color: #f3f4f6; border: 1px solid #4b5563; border-radius: 4px; padding: 6px 12px; font-size: 0.85em; cursor: pointer; font-family: 'Courier New', monospace;" onmouseover="this.style.background='#4b5563'" onmouseout="this.style.background='#374151'">
+                        📋 Copy
+                    </button>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="stopGeneration()" id="stopGenerationBtn">
+                        ⏹️ 停止生成
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文章编辑器模态框 -->
+    <div id="editorModal" class="editor-modal">
+        <div class="editor-content">
+            <div class="editor-header">
+                <h2 id="editorTitle">编辑文章</h2>
+                <button class="progress-close-btn" onclick="closeEditor()">✕ 关闭</button>
+            </div>
+            <div class="editor-body">
+                <!-- 文章分类元数据编辑 -->
+                <div class="editor-metadata">
+                    <h3>📋 文章分类</h3>
+                    <div class="editor-metadata-grid">
+                        <div class="editor-metadata-field">
+                            <label class="editor-metadata-label">模块 (Module)</label>
+                            <select id="editorModule" class="editor-metadata-select">
+                                <option value="">-- 选择模块 --</option>
+                            </select>
+                        </div>
+                        <div class="editor-metadata-field">
+                            <label class="editor-metadata-label">类型 (Type)</label>
+                            <select id="editorType" class="editor-metadata-select">
+                                <option value="">-- 选择类型 --</option>
+                            </select>
+                        </div>
+                        <div class="editor-metadata-field">
+                            <label class="editor-metadata-label">维度 (Dimension)</label>
+                            <input type="text" id="editorDimension" class="editor-metadata-select" placeholder="例如: 公司与历程" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文章HTML源码编辑 -->
+                <textarea id="editorTextarea" class="editor-textarea"></textarea>
+            </div>
+            <div class="editor-footer">
+                <button class="btn btn-secondary" onclick="closeEditor()">取消</button>
+                <button class="btn btn-primary" onclick="saveArticle()">💾 保存文章</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== 自定义确认对话框 ==========
+        function showCustomConfirm(title, message, infoItems) {
+            return new Promise((resolve) => {
+                // 创建遮罩层
+                const overlay = document.createElement('div');
+                overlay.className = 'custom-confirm-overlay';
+                overlay.style.display = 'block';
+
+                // 构建信息项HTML
+                let infoHtml = '';
+                if (infoItems && infoItems.length > 0) {
+                    infoHtml = '<div class="custom-confirm-info">';
+                    infoItems.forEach(item => {
+                        infoHtml += `
+                            <div class="custom-confirm-info-item">
+                                <span class="custom-confirm-info-label">${item.label}：</span>
+                                <span class="custom-confirm-info-value">${item.value}</span>
+                            </div>
+                        `;
+                    });
+                    infoHtml += '</div>';
+                }
+
+                // 创建对话框
+                overlay.innerHTML = `
+                    <div class="custom-confirm-dialog">
+                        <div class="custom-confirm-header">
+                            <h3 class="custom-confirm-title">${title}</h3>
+                        </div>
+                        <div class="custom-confirm-body">
+                            ${message}
+                            ${infoHtml}
+                        </div>
+                        <div class="custom-confirm-footer">
+                            <button class="custom-confirm-btn custom-confirm-btn-cancel" id="confirmCancel">取消</button>
+                            <button class="custom-confirm-btn custom-confirm-btn-confirm" id="confirmOk">确定</button>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(overlay);
+
+                // 绑定事件
+                document.getElementById('confirmOk').onclick = () => {
+                    document.body.removeChild(overlay);
+                    resolve(true);
+                };
+
+                document.getElementById('confirmCancel').onclick = () => {
+                    document.body.removeChild(overlay);
+                    resolve(false);
+                };
+
+                // 点击遮罩层关闭
+                overlay.onclick = (e) => {
+                    if (e.target === overlay) {
+                        document.body.removeChild(overlay);
+                        resolve(false);
+                    }
+                };
+            });
+        }
+
+        // ========== 自定义提示对话框 ==========
+        function showCustomAlert(title, message, type = 'info') {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'custom-confirm-overlay';
+                overlay.style.display = 'block';
+
+                // 根据类型选择图标
+                let icon = 'ℹ️';
+                let iconColor = '#667eea';
+                if (type === 'success') {
+                    icon = '✅';
+                    iconColor = '#10b981';
+                } else if (type === 'error') {
+                    icon = '❌';
+                    iconColor = '#ef4444';
+                } else if (type === 'warning') {
+                    icon = '⚠️';
+                    iconColor = '#f59e0b';
+                }
+
+                overlay.innerHTML = `
+                    <div class="custom-confirm-dialog">
+                        <div class="custom-confirm-header">
+                            <h3 class="custom-confirm-title" style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 1.5em;">${icon}</span>
+                                <span>${title}</span>
+                            </h3>
+                        </div>
+                        <div class="custom-confirm-body">
+                            ${message}
+                        </div>
+                        <div class="custom-confirm-footer">
+                            <button class="custom-confirm-btn custom-confirm-btn-confirm" id="alertOk" style="background: ${iconColor};">确定</button>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(overlay);
+
+                const closeAlert = () => {
+                    document.body.removeChild(overlay);
+                    resolve(true);
+                };
+
+                document.getElementById('alertOk').onclick = closeAlert;
+                overlay.onclick = (e) => {
+                    if (e.target === overlay) {
+                        closeAlert();
+                    }
+                };
+            });
+        }
+
+        // ========== 全局变量 ==========
+        let tasks = [];
+        let dimensions = {};
+        let templates = [];
+        let pollInterval = null;
+        let isGenerating = false;
+        let articles = [];
+        let allArticles = [];
+        let currentEditingArticle = null;
+        let articleStructure = null;
+
+        // 模板结构（24个子章节）
+        const SUBSECTIONS = [
+            { id: '1.1', title: '创始背景与团队' },
+            { id: '1.2', title: '股权结构与早期资本' },
+            { id: '1.3', title: '核心使命与早期定位' },
+            { id: '1.4', title: '主营业务与收入模式' },
+            { id: '2.1', title: '初创期（0-1阶段）' },
+            { id: '2.2', title: '成长期（1-10阶段）' },
+            { id: '2.3', title: '扩张期（10-N阶段）' },
+            { id: '2.4', title: '成熟期/转型期' },
+            { id: '3.1', title: '商业模式解析' },
+            { id: '3.2', title: '核心竞争力' },
+            { id: '3.3', title: '竞争格局与对手分析' },
+            { id: '3.4', title: '客户与市场洞察' },
+            { id: '4.1', title: '组织架构演变' },
+            { id: '4.2', title: '企业文化与价值观' },
+            { id: '4.3', title: '人才策略与团队建设' },
+            { id: '4.4', title: '管理机制与流程' },
+            { id: '5.1', title: '重大危机事件' },
+            { id: '5.2', title: '战略失误与教训' },
+            { id: '5.3', title: '长期风险与隐患' },
+            { id: '5.4', title: '复盘与反思' },
+            { id: '6.1', title: '当前业务现状' },
+            { id: '6.2', title: '当前面临的挑战' },
+            { id: '6.3', title: '战略方向与未来布局' },
+            { id: '6.4', title: '可学习的经验与启示' }
+        ];
+
+        // ========== 页面初始化 ==========
+        window.onload = function() {
+            loadTasks();
+            loadDimensions();
+            loadTemplates();
+            loadApiKey();
+            loadArticleManagement();
+        };
+
+        // ========== 选项卡切换 ==========
+        function switchTab(tabName) {
+            // 隐藏所有内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 移除所有按钮的激活状态
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 激活选中的内容和按钮
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ========== 任务管理 ==========
+        async function loadTasks() {
+            try {
+                const response = await fetch('http://localhost:5001/api/tasks/list');
+                const result = await response.json();
+
+                if (result.success) {
+                    tasks = result.tasks || [];
+                    renderTaskList();
+                }
+            } catch (error) {
+                console.error('加载任务失败:', error);
+                tasks = getDefaultTasks();
+                renderTaskList();
+            }
+        }
+
+        function getDefaultTasks() {
+            return [
+                {
+                    id: 'task-1',
+                    name: '公司与历程 - 每日更新',
+                    dimensionId: 'company',
+                    templateId: 'company-article-template',
+                    schedule: 'daily',
+                    scheduleTime: '09:00',
+                    model: 'haiku',
+                    enabled: true,
+                    autoUpdate: true
+                }
+            ];
+        }
+
+        function renderTaskList() {
+            const container = document.getElementById('taskList');
+
+            if (tasks.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #9ca3af;">暂无配置任务，点击"创建新任务"开始配置</div>';
+                return;
+            }
+
+            container.innerHTML = tasks.map(task => {
+                const dimension = dimensions[task.dimensionId] || { name: task.dimensionId, icon: '📄' };
+                const template = templates.find(t => t.id === task.templateId) || { name: task.templateId };
+
+                let scheduleText = '';
+                if (task.schedule === 'manual') {
+                    scheduleText = '手动触发';
+                } else if (task.schedule === 'daily') {
+                    scheduleText = `每天 ${task.scheduleTime}`;
+                } else if (task.schedule === 'custom') {
+                    scheduleText = `自定义: ${task.cronExpression}`;
+                }
+
+                // 获取 API 方案名称
+                let apiProfileText = '当前激活的方案';
+                if (task.apiProfileId && apiProfiles[task.apiProfileId]) {
+                    apiProfileText = apiProfiles[task.apiProfileId].name;
+                }
+
+                return `
+                    <div class="task-card ${task.enabled ? 'active' : ''}">
+                        <div class="task-header">
+                            <div class="task-title">${dimension.icon} ${task.name}</div>
+                            <div class="task-status ${task.enabled ? 'status-enabled' : 'status-disabled'}">
+                                ${task.enabled ? '✅ 已启用' : '⏸️ 已停用'}
+                            </div>
+                        </div>
+
+                        <div class="task-details">
+                            <div class="task-detail-item">
+                                <span class="task-detail-label">子模块：</span>
+                                <span class="task-detail-value">${dimension.name}</span>
+                            </div>
+                            <div class="task-detail-item">
+                                <span class="task-detail-label">模板：</span>
+                                <span class="task-detail-value">${template.name}</span>
+                            </div>
+                            <div class="task-detail-item">
+                                <span class="task-detail-label">执行时间：</span>
+                                <span class="task-detail-value">${scheduleText}</span>
+                            </div>
+                            <div class="task-detail-item">
+                                <span class="task-detail-label">API方案：</span>
+                                <span class="task-detail-value">${apiProfileText}</span>
+                            </div>
+                        </div>
+
+                        <div class="task-actions">
+                            <button class="btn btn-primary" onclick="editTask('${task.id}')">✏️ 编辑</button>
+                            <button class="btn ${task.enabled ? 'btn-secondary' : 'btn-success'}" onclick="toggleTask('${task.id}')">
+                                ${task.enabled ? '⏸️ 停用' : '▶️ 启用'}
+                            </button>
+                            <button class="btn btn-secondary" onclick="testTask('${task.id}')">🧪 测试</button>
+                            <button class="btn btn-danger" onclick="deleteTask('${task.id}')">🗑️ 删除</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function createNewTask() {
+            const dimensionOptions = Object.entries(dimensions).map(([key, value]) =>
+                `<option value="${key}">${value.icon} ${value.name}</option>`
+            ).join('');
+
+            const templateOptions = templates.map(t =>
+                `<option value="${t.id}">${t.name}</option>`
+            ).join('');
+
+            showModal('➕ 创建新任务', `
+                <div class="form-group">
+                    <label class="form-label">任务名称</label>
+                    <input type="text" class="form-input" id="taskName" placeholder="例如: 公司与历程 - 每日更新">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">选择子模块</label>
+                    <select class="form-select" id="taskDimension">
+                        ${dimensionOptions}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">选择生成模板</label>
+                    <select class="form-select" id="taskTemplate">
+                        ${templateOptions}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">执行方式</label>
+                    <select class="form-select" id="taskSchedule" onchange="updateScheduleFields()">
+                        <option value="manual">手动触发</option>
+                        <option value="daily">每天自动执行</option>
+                        <option value="custom">自定义Cron</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="scheduleTimeGroup" style="display: none;">
+                    <label class="form-label">执行时间</label>
+                    <input type="time" class="form-input" id="taskScheduleTime" value="09:00">
+                </div>
+
+                <div class="form-group" id="cronGroup" style="display: none;">
+                    <label class="form-label">Cron表达式</label>
+                    <input type="text" class="form-input" id="taskCron" placeholder="0 9 * * *">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">AI模型</label>
+                    <select class="form-select" id="taskModel">
+                        <option value="haiku" selected>Claude Haiku (推荐)</option>
+                        <option value="sonnet">Claude Sonnet</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="taskAutoUpdate" checked style="margin-right: 8px;">
+                        自动更新导航索引
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="taskEnabled" checked style="margin-right: 8px;">
+                        创建后立即启用
+                    </label>
+                </div>
+            `, async function() {
+                const newTask = {
+                    id: 'task-' + Date.now(),
+                    name: document.getElementById('taskName').value.trim(),
+                    dimensionId: document.getElementById('taskDimension').value,
+                    templateId: document.getElementById('taskTemplate').value,
+                    schedule: document.getElementById('taskSchedule').value,
+                    scheduleTime: document.getElementById('taskScheduleTime').value,
+                    cronExpression: document.getElementById('taskCron').value,
+                    model: document.getElementById('taskModel').value,
+                    autoUpdate: document.getElementById('taskAutoUpdate').checked,
+                    enabled: document.getElementById('taskEnabled').checked
+                };
+
+                if (!newTask.name) {
+                    alert('请输入任务名称');
+                    return;
+                }
+
+                tasks.push(newTask);
+                await saveTasks();
+                renderTaskList();
+                closeModal();
+                alert('✅ 任务创建成功！');
+            });
+        }
+
+        function updateScheduleFields() {
+            const schedule = document.getElementById('taskSchedule').value;
+            document.getElementById('scheduleTimeGroup').style.display = schedule === 'daily' ? 'block' : 'none';
+            document.getElementById('cronGroup').style.display = schedule === 'custom' ? 'block' : 'none';
+        }
+
+        async function editTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            // 🔄 重新加载最新的 API 方案数据
+            const savedProfiles = localStorage.getItem('api_profiles');
+            if (savedProfiles) {
+                apiProfiles = JSON.parse(savedProfiles);
+            }
+
+            const dimensionOptions = Object.entries(dimensions).map(([key, value]) =>
+                `<option value="${key}" ${task.dimensionId === key ? 'selected' : ''}>${value.icon} ${value.name}</option>`
+            ).join('');
+
+            const templateOptions = templates.map(t =>
+                `<option value="${t.id}" ${task.templateId === t.id ? 'selected' : ''}>${t.name}</option>`
+            ).join('');
+
+            // 生成 API 方案选项
+            const profileOptions = ['<option value="">使用当前激活的方案</option>'];
+            for (const [id, profile] of Object.entries(apiProfiles)) {
+                const selected = task.apiProfileId === id ? 'selected' : '';
+                profileOptions.push(`<option value="${id}" ${selected}>${profile.name}</option>`);
+            }
+
+            showModal('✏️ 编辑任务', `
+                <div class="form-group">
+                    <label class="form-label">任务名称</label>
+                    <input type="text" class="form-input" id="taskName" value="${task.name}">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">选择子模块</label>
+                    <select class="form-select" id="taskDimension">
+                        ${dimensionOptions}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">选择生成模板</label>
+                    <select class="form-select" id="taskTemplate">
+                        ${templateOptions}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">执行方式</label>
+                    <select class="form-select" id="taskSchedule" onchange="updateScheduleFields()">
+                        <option value="manual" ${task.schedule === 'manual' ? 'selected' : ''}>手动触发</option>
+                        <option value="daily" ${task.schedule === 'daily' ? 'selected' : ''}>每天自动执行</option>
+                        <option value="custom" ${task.schedule === 'custom' ? 'selected' : ''}>自定义Cron</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="scheduleTimeGroup" style="display: ${task.schedule === 'daily' ? 'block' : 'none'};">
+                    <label class="form-label">执行时间</label>
+                    <input type="time" class="form-input" id="taskScheduleTime" value="${task.scheduleTime || '09:00'}">
+                </div>
+
+                <div class="form-group" id="cronGroup" style="display: ${task.schedule === 'custom' ? 'block' : 'none'};">
+                    <label class="form-label">Cron表达式</label>
+                    <input type="text" class="form-input" id="taskCron" value="${task.cronExpression || ''}">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">API方案</label>
+                    <select class="form-select" id="taskApiProfile">
+                        ${profileOptions.join('')}
+                    </select>
+                    <div style="margin-top: 8px; font-size: 0.85em; color: #6b7280;">
+                        💡 可以为不同任务指定不同的 API 方案（留空则使用当前激活的方案）
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="taskAutoUpdate" ${task.autoUpdate ? 'checked' : ''} style="margin-right: 8px;">
+                        自动更新导航索引
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="taskEnabled" ${task.enabled ? 'checked' : ''} style="margin-right: 8px;">
+                        启用任务
+                    </label>
+                </div>
+            `, async function() {
+                task.name = document.getElementById('taskName').value.trim();
+                task.dimensionId = document.getElementById('taskDimension').value;
+                task.templateId = document.getElementById('taskTemplate').value;
+                task.schedule = document.getElementById('taskSchedule').value;
+                task.scheduleTime = document.getElementById('taskScheduleTime').value;
+                task.cronExpression = document.getElementById('taskCron').value;
+                task.apiProfileId = document.getElementById('taskApiProfile').value;
+                task.autoUpdate = document.getElementById('taskAutoUpdate').checked;
+                task.enabled = document.getElementById('taskEnabled').checked;
+                task.updatedAt = new Date().toISOString();
+
+                if (!task.name) {
+                    alert('请输入任务名称');
+                    return;
+                }
+
+                await saveTasks();
+                renderTaskList();
+                closeModal();
+                alert('✅ 任务更新成功！');
+            });
+        }
+
+        async function toggleTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            task.enabled = !task.enabled;
+            await saveTasks();
+            renderTaskList();
+        }
+
+        async function testTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            // 🔄 重新加载最新的 API 方案数据
+            const savedProfiles = localStorage.getItem('api_profiles');
+            console.log('🔍 localStorage.api_profiles 原始数据:', savedProfiles);
+
+            if (savedProfiles) {
+                try {
+                    apiProfiles = JSON.parse(savedProfiles);
+                    console.log('✅ 成功解析 API profiles:', apiProfiles);
+                } catch (e) {
+                    console.error('❌ 解析 API profiles 失败:', e);
+                    apiProfiles = {};
+                }
+            } else {
+                console.warn('⚠️ localStorage 中没有 api_profiles 数据');
+                apiProfiles = {};
+            }
+
+            // 🔍 调试：打印所有相关信息
+            console.log('🔍 调试信息:');
+            console.log('- task.apiProfileId:', task.apiProfileId);
+            console.log('- apiProfiles 对象:', apiProfiles);
+            console.log('- apiProfiles 键列表:', Object.keys(apiProfiles));
+            console.log('- active_profile_id:', localStorage.getItem('active_profile_id'));
+            console.log('- anthropic_api_key (旧):', localStorage.getItem('anthropic_api_key'));
+
+            // 获取任务指定的 API 方案，如果没有指定则使用当前激活的方案
+            let apiKey, apiBaseUrl, apiModel, profileName;
+
+            if (task.apiProfileId && apiProfiles[task.apiProfileId]) {
+                // 使用任务指定的方案
+                const profile = apiProfiles[task.apiProfileId];
+                apiKey = profile.apiKey;
+                apiBaseUrl = profile.baseUrl;
+                apiModel = profile.model;
+                profileName = profile.name;
+                console.log('✅ 使用任务指定的方案:', profileName);
+            } else {
+                // 使用当前激活的方案
+                const activeProfileId = localStorage.getItem('active_profile_id');
+                if (activeProfileId && apiProfiles[activeProfileId]) {
+                    // 从新的 API profiles 系统获取
+                    const profile = apiProfiles[activeProfileId];
+                    apiKey = profile.apiKey;
+                    apiBaseUrl = profile.baseUrl;
+                    apiModel = profile.model;
+                    profileName = profile.name + ' (当前激活)';
+                    console.log('✅ 使用当前激活的方案:', profileName);
+                } else {
+                    // 回退到旧的 localStorage 键（兼容性）
+                    apiKey = localStorage.getItem('anthropic_api_key');
+                    apiBaseUrl = localStorage.getItem('api_base_url') || 'https://api.anthropic.com';
+                    apiModel = localStorage.getItem('api_default_model');
+                    profileName = '当前激活的方案（旧配置）';
+                    console.log('⚠️ 使用旧配置:', { apiKey: apiKey ? '有' : '无', activeProfileId });
+                }
+            }
+
+            console.log('🔍 最终 API 配置:', {
+                apiKey: apiKey ? `${apiKey.substring(0, 8)}...${apiKey.slice(-4)}` : 'undefined',
+                apiBaseUrl,
+                apiModel,
+                profileName
+            });
+
+            if (!apiKey) {
+                alert('❌ 请先在系统设置中配置 API 密钥！\n\n调试信息：\n- 任务API方案ID: ' + (task.apiProfileId || '无') + '\n- 当前激活方案ID: ' + (localStorage.getItem('active_profile_id') || '无') + '\n- API方案总数: ' + Object.keys(apiProfiles).length);
+                return;
+            }
+
+            const modelDisplay = apiModel || 'Claude Haiku';
+            const dimension = dimensions[task.dimensionId];
+            const template = templates.find(t => t.id === task.templateId);
+
+            // 使用自定义确认对话框
+            const confirmed = await showCustomConfirm(
+                '此页面显示',
+                `确认要测试运行任务 "${task.name}" 吗？`,
+                [
+                    { label: 'API方案', value: profileName },
+                    { label: '子模块', value: dimension?.name || task.dimensionId },
+                    { label: '模板', value: template?.name || task.templateId },
+                    { label: 'AI模型', value: modelDisplay },
+                    { label: 'API端点', value: apiBaseUrl }
+                ]
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            // 🔍 调试：打印发送的API配置
+            console.log('🔍 发送到后端的API配置:', {
+                apiKey: apiKey ? `${apiKey.substring(0, 8)}...${apiKey.slice(-4)}` : 'undefined',
+                apiBaseUrl,
+                apiModel,
+                profileName
+            });
+
+            try {
+                const response = await fetch(`http://localhost:5001/api/tasks/run/${taskId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        apiKey,
+                        apiBaseUrl,
+                        apiModel
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // 显示进度监控面板
+                    showProgressMonitor();
+                    // 开始轮询生成状态
+                    startPollingGenerationStatus();
+                } else {
+                    alert('❌ 任务启动失败: ' + result.error);
+                }
+            } catch (error) {
+                console.error('测试任务失败:', error);
+                alert('❌ 测试任务失败，请检查后端服务是否运行');
+            }
+        }
+
+        // ========== 进度监控面板 ==========
+
+        function showProgressMonitor() {
+            document.getElementById('progressMonitor').classList.add('active');
+            document.getElementById('companyInfoBox').style.display = 'none';
+            document.getElementById('progressBarFill').style.width = '0%';
+            document.getElementById('progressBarFill').textContent = '0%';
+            document.getElementById('progressText').textContent = '准备开始生成...';
+            document.getElementById('progressLogContainer').innerHTML = '';
+            document.getElementById('progressStatusBadge').textContent = '生成中...';
+            document.getElementById('progressStatusBadge').className = 'status-badge generating';
+            isGenerating = true;
+
+            // 初始化子章节列表
+            initProgressSubsectionList();
+        }
+
+        function closeProgressMonitor() {
+            if (isGenerating && !confirm('生成正在进行中，确定要关闭监控面板吗？\n\n生成将在后台继续，你可以稍后在快速生成页面查看结果。')) {
+                return;
+            }
+            document.getElementById('progressMonitor').classList.remove('active');
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+        }
+
+        function initProgressSubsectionList() {
+            const list = document.getElementById('progressSubsectionList');
+            list.innerHTML = '';
+
+            SUBSECTIONS.forEach((sub) => {
+                const item = document.createElement('div');
+                item.className = 'subsection-item';
+                item.id = `progress-sub-${sub.id}`;
+                item.innerHTML = `
+                    <span class="subsection-number">${sub.id}</span>
+                    <span class="subsection-title">${sub.title}</span>
+                    <span class="subsection-status">⏳</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function updateProgressSubsection(subsectionId, status) {
+            const item = document.getElementById(`progress-sub-${subsectionId}`);
+            if (!item) return;
+
+            if (status === 'generating') {
+                item.className = 'subsection-item generating';
+                item.querySelector('.subsection-status').textContent = '⏳';
+            } else if (status === 'completed') {
+                item.className = 'subsection-item completed';
+                item.querySelector('.subsection-status').textContent = '✅';
+            }
+        }
+
+        function addProgressLog(message) {
+            const logContainer = document.getElementById('progressLogContainer');
+            const logItem = document.createElement('div');
+            logItem.className = 'log-item';
+            logItem.textContent = message;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // 轮询生成状态
+        function startPollingGenerationStatus() {
+            addProgressLog('[' + new Date().toLocaleTimeString() + '] 🚀 连接后端服务...');
+
+            pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('http://localhost:5001/api/generation/status');
+                    const status = await response.json();
+
+                    // 更新公司信息
+                    if (status.company && document.getElementById('companyInfoBox').style.display === 'none') {
+                        document.getElementById('companyInfoBox').style.display = 'block';
+                        document.getElementById('progressCompanyName').textContent = status.company.nameZh;
+                        document.getElementById('progressCompanyFounded').textContent = status.company.founded;
+                        document.getElementById('progressCompanyProduct').textContent = status.company.mainProduct;
+                        document.getElementById('progressArticleId').textContent = 'ai-c-' + status.company.name.toLowerCase().replace(/\s+/g, '-');
+                    }
+
+                    // 更新进度
+                    if (status.progress > 0) {
+                        document.getElementById('progressBarFill').style.width = status.progress + '%';
+                        document.getElementById('progressBarFill').textContent = status.progress + '%';
+                    }
+
+                    // 更新当前子章节
+                    if (status.currentSubsection) {
+                        document.getElementById('progressText').textContent =
+                            `正在生成 ${status.currentSubsection.id} ${status.currentSubsection.title}...`;
+                        updateProgressSubsection(status.currentSubsection.id, 'generating');
+
+                        // 标记之前的为完成
+                        SUBSECTIONS.forEach(sub => {
+                            const subNum = parseFloat(sub.id);
+                            const curNum = parseFloat(status.currentSubsection.id);
+                            if (subNum < curNum) {
+                                updateProgressSubsection(sub.id, 'completed');
+                            }
+                        });
+                    }
+
+                    // 更新日志（只添加新日志）
+                    const logContainer = document.getElementById('progressLogContainer');
+                    const currentLogCount = logContainer.children.length;
+                    if (status.logs && status.logs.length > currentLogCount) {
+                        for (let i = currentLogCount; i < status.logs.length; i++) {
+                            addProgressLog(status.logs[i]);
+                        }
+                    }
+
+                    // 更新实时内容预览
+                    if (status.generatedContent && Object.keys(status.generatedContent).length > 0) {
+                        updateContentPreview(status.generatedContent);
+                    }
+
+                    // 检查是否完成
+                    if (!status.isGenerating) {
+                        clearInterval(pollInterval);
+                        pollInterval = null;
+                        isGenerating = false;
+
+                        if (status.result) {
+                            // 标记所有为完成
+                            SUBSECTIONS.forEach(sub => updateProgressSubsection(sub.id, 'completed'));
+
+                            document.getElementById('progressStatusBadge').textContent = '✅ 完成';
+                            document.getElementById('progressStatusBadge').className = 'status-badge completed';
+                            document.getElementById('progressText').textContent = '✅ 所有内容生成完成！';
+                            document.getElementById('progressBarFill').style.width = '100%';
+                            document.getElementById('progressBarFill').textContent = '100%';
+                            document.getElementById('stopGenerationBtn').style.display = 'none';
+
+                            addProgressLog('[' + new Date().toLocaleTimeString() + '] 🎉 文章生成成功！');
+
+                            // 创建可点击的链接日志
+                            const logContainer = document.getElementById('progressLogContainer');
+                            const linkLog = document.createElement('div');
+                            linkLog.className = 'log-item';
+                            linkLog.innerHTML = '[' + new Date().toLocaleTimeString() + '] 📄 <a href="' + status.result.url + '" target="_blank" style="color: #667eea; text-decoration: underline; cursor: pointer;">点击这里查看文章</a>';
+                            logContainer.appendChild(linkLog);
+                            logContainer.scrollTop = logContainer.scrollHeight;
+
+                            // 自动打开文章（可能被弹窗拦截器阻止）
+                            setTimeout(() => {
+                                const opened = window.open(status.result.url, '_blank');
+                                if (!opened || opened.closed || typeof opened.closed == 'undefined') {
+                                    // 被拦截了，已经在日志中显示了可点击链接
+                                    addProgressLog('[' + new Date().toLocaleTimeString() + '] ⚠️ 弹窗被拦截，请点击上方链接查看文章');
+                                }
+                            }, 1000);
+                        } else if (status.error) {
+                            document.getElementById('progressStatusBadge').textContent = '❌ 错误';
+                            document.getElementById('progressStatusBadge').className = 'status-badge error';
+                            document.getElementById('progressText').textContent = '❌ 生成失败';
+                            document.getElementById('stopGenerationBtn').style.display = 'none';
+                            addProgressLog('[' + new Date().toLocaleTimeString() + '] ❌ 错误: ' + status.error);
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('轮询状态失败:', error);
+                }
+            }, 1000); // 每秒轮询一次
+        }
+
+        async function stopGeneration() {
+            if (!confirm('确定要停止生成吗？已生成的内容将不会保存。')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5001/api/generation/stop', {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    clearInterval(pollInterval);
+                    pollInterval = null;
+                    isGenerating = false;
+                    document.getElementById('progressStatusBadge').textContent = '已取消';
+                    document.getElementById('progressStatusBadge').className = 'status-badge error';
+                    document.getElementById('stopGenerationBtn').style.display = 'none';
+                    addProgressLog('[' + new Date().toLocaleTimeString() + '] ⏹️ 生成已取消');
+                }
+            } catch (error) {
+                console.error('停止生成失败:', error);
+            }
+        }
+
+        function copyLogs() {
+            const logContainer = document.getElementById('progressLogContainer');
+            const logs = Array.from(logContainer.querySelectorAll('.log-item'))
+                .map(item => item.textContent)
+                .join('\n');
+
+            navigator.clipboard.writeText(logs).then(() => {
+                const btn = window.event ? window.event.target : document.activeElement;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                alert('Copy failed');
+            });
+        }
+
+        function updateContentPreview(generatedContent) {
+            const preview = document.getElementById('contentPreview');
+            let html = '';
+
+            const sortedIds = Object.keys(generatedContent).sort();
+
+            for (const id of sortedIds) {
+                const section = generatedContent[id];
+                html += `
+                    <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #e5e7eb;">
+                        <h4 style="color: #667eea; margin-bottom: 10px; font-size: 1em;">${id} ${section.title}</h4>
+                        <div style="color: #374151; white-space: pre-wrap;">${section.content}</div>
+                    </div>
+                `;
+            }
+
+            if (html) {
+                preview.innerHTML = html;
+                preview.scrollTop = preview.scrollHeight;
+            }
+        }
+
+        async function deleteTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            if (!confirm(`确认删除任务 "${task.name}" 吗？\n此操作不可恢复。`)) return;
+
+            tasks = tasks.filter(t => t.id !== taskId);
+            await saveTasks();
+            renderTaskList();
+            alert('✅ 任务已删除');
+        }
+
+        async function saveTasks() {
+            try {
+                await fetch('http://localhost:5001/api/tasks/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tasks })
+                });
+            } catch (error) {
+                console.error('保存任务失败:', error);
+            }
+        }
+
+        // ========== 文章管理 ==========
+        async function loadArticleManagement() {
+            // 加载文章结构
+            try {
+                const structureResponse = await fetch('http://localhost:5001/data/article-structure.json');
+                articleStructure = await structureResponse.json();
+
+                // 填充模块选择器
+                const moduleFilter = document.getElementById('moduleFilter');
+                moduleFilter.innerHTML = '<option value="">全部模块 (8个)</option>';
+                articleStructure.modules.forEach(module => {
+                    moduleFilter.innerHTML += `<option value="${module.id}">${module.icon} ${module.name}</option>`;
+                });
+            } catch (error) {
+                console.error('加载文章结构失败:', error);
+            }
+
+            // 加载所有文章
+            try {
+                const response = await fetch('http://localhost:5001/api/articles/list');
+                const result = await response.json();
+
+                if (result.success) {
+                    allArticles = result.articles || [];
+
+                    // 为每篇文章解析分类信息
+                    allArticles.forEach(article => {
+                        // 优先使用 API 返回的 meta 标签数据
+                        if (!article.module || !article.type) {
+                            // 只有在 API 没有返回分类信息时才从文件名解析
+                            const parsed = parseArticleMetadata(article);
+                            article.module = article.module || parsed.module;
+                            article.type = article.type || parsed.type;
+                            article.tags = parsed.tags;
+                        }
+                    });
+
+                    filterArticles();
+                }
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                alert('❌ 加载文章列表失败，请确保服务器正在运行');
+            }
+        }
+
+        function parseArticleMetadata(article) {
+            // 从文件名或标题中解析模块和类型信息
+            // 格式示例: ai-c-nvidia.html (ai=人工智能, c=company)
+            const fileName = article.fileName.replace('.html', '');
+            const parts = fileName.split('-');
+
+            let module = 'ai'; // 默认人工智能
+            let type = 'company'; // 默认公司与历程
+            let tags = [];
+
+            if (parts.length >= 2) {
+                module = parts[0]; // 第一部分是模块ID
+                type = parts[1]; // 第二部分是类型ID (c=company, p=product等)
+
+                // 类型ID映射
+                const typeMap = {
+                    'c': 'company',
+                    'p': 'product',
+                    'b': 'business',
+                    'pol': 'policy',
+                    'i': 'impact'
+                };
+
+                type = typeMap[type] || type;
+            }
+
+            return { module, type, tags };
+        }
+
+        function filterArticles() {
+            const moduleFilter = document.getElementById('moduleFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+
+            articles = allArticles.filter(article => {
+                const moduleMatch = !moduleFilter || article.module === moduleFilter;
+                const typeMatch = !typeFilter || article.type === typeFilter;
+                return moduleMatch && typeMatch;
+            });
+
+            renderArticleList();
+        }
+
+        function renderArticleList() {
+            const container = document.getElementById('articleList');
+
+            if (articles.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #9ca3af;">暂无符合条件的文章</div>';
+                return;
+            }
+
+            // 按模块分组
+            const grouped = {};
+            articles.forEach(article => {
+                const moduleId = article.module || 'unknown';
+                if (!grouped[moduleId]) {
+                    grouped[moduleId] = [];
+                }
+                grouped[moduleId].push(article);
+            });
+
+            let html = '';
+
+            for (const [moduleId, moduleArticles] of Object.entries(grouped)) {
+                const module = articleStructure?.modules.find(m => m.id === moduleId);
+                const moduleName = module ? `${module.icon} ${module.name}` : moduleId;
+
+                html += `
+                    <div class="module-section">
+                        <div class="module-section-header" onclick="toggleModuleSection('${moduleId}')">
+                            <div class="module-section-title">${moduleName}</div>
+                            <div class="module-section-count">${moduleArticles.length} 篇</div>
+                        </div>
+                        <div id="module-articles-${moduleId}" class="module-articles">
+                `;
+
+                moduleArticles.forEach(article => {
+                    const fileName = article.fileName;
+                    const directory = article.directory || 'root';
+                    const fileSize = (article.size / 1024).toFixed(2) + ' KB';
+                    const modifiedDate = new Date(article.modified).toLocaleString('zh-CN');
+
+                    // 获取类型标签
+                    const typeObj = module?.types.find(t => t.id === article.type);
+                    const typeName = typeObj ? `${typeObj.icon} ${typeObj.name}` : article.type;
+
+                    html += `
+                        <div class="article-card">
+                            <div class="article-header">
+                                <div class="article-title-section">
+                                    <div class="article-title">
+                                        <span class="article-badge badge-type">${typeName}</span>
+                                        ${article.title || fileName}
+                                    </div>
+                                    <div class="article-meta">
+                                        <span class="article-meta-item">📄 ${fileName}</span>
+                                        <span class="article-meta-item">📦 ${fileSize}</span>
+                                        <span class="article-meta-item">🕒 ${modifiedDate}</span>
+                                    </div>
+                                </div>
+                                <div class="article-actions">
+                                    <button class="btn btn-primary" onclick="previewArticle('${fileName}', '${directory}')" title="在新窗口预览">
+                                        👁️ 预览
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="toggleArticlePreview('${fileName}')" title="在当前页面展开预览">
+                                        📖 展开
+                                    </button>
+                                    <button class="btn btn-success" onclick="editArticleInModal('${fileName}')" title="编辑文章源码">
+                                        ✏️ 编辑
+                                    </button>
+                                    <button class="btn btn-danger" onclick="deleteArticle('${fileName}')" title="删除文章">
+                                        🗑️ 删除
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="article-preview" id="preview-${fileName}">
+                                <div style="text-align: center; color: #9ca3af;">加载中...</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function toggleModuleSection(moduleId) {
+            const section = document.getElementById(`module-articles-${moduleId}`);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        function showArticleStats() {
+            const statsDiv = document.getElementById('articleStats');
+
+            if (statsDiv.style.display === 'block') {
+                statsDiv.style.display = 'none';
+                return;
+            }
+
+            // 统计各模块文章数量
+            const moduleStats = {};
+            const typeStats = {};
+            let totalSize = 0;
+
+            allArticles.forEach(article => {
+                // 按模块统计
+                if (!moduleStats[article.module]) {
+                    moduleStats[article.module] = 0;
+                }
+                moduleStats[article.module]++;
+
+                // 按类型统计
+                if (!typeStats[article.type]) {
+                    typeStats[article.type] = 0;
+                }
+                typeStats[article.type]++;
+
+                totalSize += article.size;
+            });
+
+            const totalSizeMB = (totalSize / 1024 / 1024).toFixed(2);
+
+            let html = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-number">${allArticles.length}</div>
+                        <div class="stat-label">总文章数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📂</div>
+                        <div class="stat-number">${Object.keys(moduleStats).length}</div>
+                        <div class="stat-label">涉及模块</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📑</div>
+                        <div class="stat-number">${Object.keys(typeStats).length}</div>
+                        <div class="stat-label">涉及类型</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💾</div>
+                        <div class="stat-number">${totalSizeMB}</div>
+                        <div class="stat-label">总大小 (MB)</div>
+                    </div>
+                </div>
+
+                <div style="background: white; border-radius: 8px; padding: 20px; margin-top: 15px;">
+                    <h3 style="margin-bottom: 15px; color: #374151;">📊 各模块文章分布</h3>
+                    ${Object.entries(moduleStats).map(([moduleId, count]) => {
+                        const module = articleStructure?.modules.find(m => m.id === moduleId);
+                        const moduleName = module ? `${module.icon} ${module.name}` : moduleId;
+                        const percentage = ((count / allArticles.length) * 100).toFixed(1);
+                        return `
+                            <div style="margin-bottom: 12px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span style="font-weight: 600;">${moduleName}</span>
+                                    <span style="color: #667eea;">${count} 篇 (${percentage}%)</span>
+                                </div>
+                                <div style="background: #e5e7eb; border-radius: 10px; height: 8px; overflow: hidden;">
+                                    <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); width: ${percentage}%; height: 100%;"></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+
+            statsDiv.innerHTML = html;
+            statsDiv.style.display = 'block';
+        }
+
+        async function previewArticle(fileName, directory) {
+            // 根据 directory 字段构建正确的路径
+            const path = directory === 'articles' ? `articles/${fileName}` : fileName;
+            const url = `http://localhost:5001/${path}`;
+            window.open(url, '_blank');
+        }
+
+        async function toggleArticlePreview(fileName) {
+            const previewDiv = document.getElementById(`preview-${fileName}`);
+
+            if (previewDiv.classList.contains('visible')) {
+                previewDiv.classList.remove('visible');
+                return;
+            }
+
+            // 如果还没加载内容，先加载
+            if (previewDiv.innerHTML.includes('加载中')) {
+                try {
+                    const response = await fetch(`http://localhost:5001/api/articles/read/${fileName}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // 提取文章的前500个字符作为预览
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(result.content, 'text/html');
+                        const textContent = doc.body.textContent || '';
+                        const preview = textContent.substring(0, 500) + (textContent.length > 500 ? '...' : '');
+                        previewDiv.innerHTML = `<div style="white-space: pre-wrap;">${preview}</div>`;
+                    } else {
+                        previewDiv.innerHTML = '<div style="color: #ef4444;">❌ 加载失败</div>';
+                    }
+                } catch (error) {
+                    console.error('加载预览失败:', error);
+                    previewDiv.innerHTML = '<div style="color: #ef4444;">❌ 加载失败</div>';
+                }
+            }
+
+            previewDiv.classList.add('visible');
+        }
+
+        async function editArticleInModal(fileName) {
+            try {
+                const response = await fetch(`http://localhost:5001/api/articles/read/${fileName}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    currentEditingArticle = fileName;
+                    document.getElementById('editorTitle').textContent = `编辑文章 - ${fileName}`;
+                    document.getElementById('editorTextarea').value = result.content;
+
+                    // 填充模块选择器
+                    const moduleSelect = document.getElementById('editorModule');
+                    moduleSelect.innerHTML = '<option value="">-- 选择模块 --</option>';
+                    if (articleStructure && articleStructure.modules) {
+                        articleStructure.modules.forEach(module => {
+                            moduleSelect.innerHTML += `<option value="${module.id}">${module.icon} ${module.name}</option>`;
+                        });
+                    }
+
+                    // 从HTML内容中提取现有的meta标签
+                    const extractMetaTag = (content, name) => {
+                        const regex = new RegExp(`<meta\\s+name=["']${name}["']\\s+content=["'](.*?)["']`, 'i');
+                        const match = content.match(regex);
+                        return match ? match[1] : '';
+                    };
+
+                    const currentModule = extractMetaTag(result.content, 'article-module');
+                    const currentType = extractMetaTag(result.content, 'article-type');
+                    const currentDimension = extractMetaTag(result.content, 'article-dimension');
+
+                    // 设置当前模块
+                    if (currentModule) {
+                        moduleSelect.value = currentModule;
+                    }
+
+                    // 填充类型选择器（基于当前模块）
+                    updateEditorTypeSelect(currentModule, currentType);
+
+                    // 设置维度
+                    document.getElementById('editorDimension').value = currentDimension || '';
+
+                    // 模块变化时更新类型选择器
+                    moduleSelect.onchange = () => {
+                        updateEditorTypeSelect(moduleSelect.value, '');
+                    };
+
+                    document.getElementById('editorModal').classList.add('active');
+                } else {
+                    showCustomAlert('❌ 加载失败', '无法加载文章内容: ' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                showCustomAlert('❌ 加载失败', '网络错误或服务器未响应', 'error');
+            }
+        }
+
+        function updateEditorTypeSelect(moduleId, selectedType) {
+            const typeSelect = document.getElementById('editorType');
+            typeSelect.innerHTML = '<option value="">-- 选择类型 --</option>';
+
+            if (moduleId && articleStructure && articleStructure.modules) {
+                const module = articleStructure.modules.find(m => m.id === moduleId);
+                if (module && module.types) {
+                    module.types.forEach(type => {
+                        typeSelect.innerHTML += `<option value="${type.id}">${type.icon} ${type.name}</option>`;
+                    });
+                }
+            }
+
+            if (selectedType) {
+                typeSelect.value = selectedType;
+            }
+        }
+
+        function closeEditor() {
+            if (currentEditingArticle && document.getElementById('editorTextarea').value !== '') {
+                if (!confirm('确定要关闭编辑器吗？未保存的更改将丢失。')) {
+                    return;
+                }
+            }
+            document.getElementById('editorModal').classList.remove('active');
+            currentEditingArticle = null;
+        }
+
+        async function saveArticle() {
+            if (!currentEditingArticle) return;
+
+            let content = document.getElementById('editorTextarea').value;
+            const newModule = document.getElementById('editorModule').value;
+            const newType = document.getElementById('editorType').value;
+            const newDimension = document.getElementById('editorDimension').value;
+
+            // 更新HTML中的meta标签
+            if (newModule || newType || newDimension) {
+                // 辅助函数：更新或添加meta标签
+                const updateMetaTag = (html, name, value) => {
+                    const regex = new RegExp(`<meta\\s+name=["']${name}["']\\s+content=["'][^"']*["']\\s*/?>`, 'gi');
+                    const newTag = `<meta name="${name}" content="${value}">`;
+
+                    if (regex.test(html)) {
+                        // 如果标签存在，替换它
+                        return html.replace(regex, newTag);
+                    } else {
+                        // 如果标签不存在，在<head>中添加它
+                        const headEndRegex = /<\/head>/i;
+                        if (headEndRegex.test(html)) {
+                            return html.replace(headEndRegex, `    ${newTag}\n</head>`);
+                        } else {
+                            // 如果没有</head>，在文档开头添加
+                            return newTag + '\n' + html;
+                        }
+                    }
+                };
+
+                // 更新各个meta标签
+                if (newModule) {
+                    content = updateMetaTag(content, 'article-module', newModule);
+                }
+                if (newType) {
+                    content = updateMetaTag(content, 'article-type', newType);
+                }
+                if (newDimension) {
+                    content = updateMetaTag(content, 'article-dimension', newDimension);
+                }
+            }
+
+            try {
+                const response = await fetch('http://localhost:5001/api/articles/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: currentEditingArticle,
+                        content: content
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ 文章保存成功！');
+                    closeEditor();
+                    loadArticleManagement();
+                } else {
+                    alert('❌ 保存失败: ' + result.error);
+                }
+            } catch (error) {
+                console.error('保存文章失败:', error);
+                alert('❌ 保存文章失败');
+            }
+        }
+
+        async function deleteArticle(fileName) {
+            const article = allArticles.find(a => a.fileName === fileName);
+            const fileSize = article ? (article.size / 1024).toFixed(2) + ' KB' : '未知';
+            const modifiedDate = article ? new Date(article.modified).toLocaleString('zh-CN') : '未知';
+
+            const confirmed = await showCustomConfirm(
+                '⚠️ 确认删除文章',
+                `确定要删除文章 "${article?.title || fileName}" 吗？`,
+                [
+                    { label: '文件名', value: fileName },
+                    { label: '文件大小', value: fileSize },
+                    { label: '修改时间', value: modifiedDate },
+                    { label: '警告', value: '文章将被移至 .trash 目录，可以恢复' }
+                ]
+            );
+
+            if (!confirmed) return;
+
+            try {
+                const response = await fetch(`http://localhost:5001/api/articles/delete/${fileName}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // 使用自定义成功提示，等待用户确认后再刷新
+                    await showCustomAlert('✅ 删除成功', '文章已成功删除并移至 .trash 目录，可以恢复。', 'success');
+                    loadArticleManagement();
+                } else {
+                    showCustomAlert('❌ 删除失败', result.error, 'error');
+                }
+            } catch (error) {
+                console.error('删除文章失败:', error);
+                showCustomAlert('❌ 删除失败', '网络错误或服务器未响应', 'error');
+            }
+        }
+
+        function openArticlesFolder() {
+            // 提示用户文章位置
+            alert('文章存储位置：C:\\Cognova\\articles\\\n\n您可以在文件资源管理器中打开此目录。');
+        }
+
+        // ========== 子模块管理 ==========
+        async function loadDimensions() {
+            try {
+                const response = await fetch('http://localhost:5001/api/dimensions/list');
+                const result = await response.json();
+
+                if (result.success && result.dimensions) {
+                    dimensions = result.dimensions;
+                    renderDimensionTable();
+                }
+            } catch (error) {
+                console.error('加载子模块失败:', error);
+                dimensions = getDefaultDimensions();
+                renderDimensionTable();
+            }
+        }
+
+        function getDefaultDimensions() {
+            return {
+                'company': { name: '公司与历程', icon: '🏢', description: '研究公司发展历程和核心团队' },
+                'product': { name: '产品与应用', icon: '💻', description: '分析产品特性和应用场景' },
+                'business': { name: '商业模式', icon: '💼', description: '探讨商业模式和盈利方式' },
+                'policy': { name: '政策法规', icon: '📜', description: '关注政策影响和合规要求' },
+                'industry': { name: '行业动态', icon: '🏭', description: '追踪行业趋势和竞争格局' }
+            };
+        }
+
+        function renderDimensionTable() {
+            const tbody = document.getElementById('dimensionTableBody');
+            tbody.innerHTML = Object.entries(dimensions).map(([key, value]) => `
+                <tr>
+                    <td><code>${key}</code></td>
+                    <td style="font-size: 1.5em;">${value.icon}</td>
+                    <td><strong>${value.name}</strong></td>
+                    <td>${value.description}</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editDimension('${key}')" style="padding: 6px 12px; font-size: 0.85em;">✏️ 编辑</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function addNewDimension() {
+            showModal('➕ 新增子模块', `
+                <div class="form-group">
+                    <label class="form-label">模块ID（英文，唯一标识）</label>
+                    <input type="text" class="form-input" id="newDimKey" placeholder="例如: technology">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">模块名称</label>
+                    <input type="text" class="form-input" id="newDimName" placeholder="例如: 技术创新">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">图标 Emoji</label>
+                    <input type="text" class="form-input" id="newDimIcon" placeholder="例如: 🔬" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">描述</label>
+                    <textarea class="form-textarea" id="newDimDesc" rows="3" placeholder="简要描述该模块的内容定位"></textarea>
+                </div>
+            `, async function() {
+                const key = document.getElementById('newDimKey').value.trim();
+                const name = document.getElementById('newDimName').value.trim();
+                const icon = document.getElementById('newDimIcon').value.trim();
+                const description = document.getElementById('newDimDesc').value.trim();
+
+                if (!key || !name || !icon) {
+                    alert('请填写完整信息');
+                    return;
+                }
+
+                if (dimensions[key]) {
+                    alert('该模块ID已存在');
+                    return;
+                }
+
+                dimensions[key] = { name, icon, description };
+                await saveDimensions();
+                renderDimensionTable();
+                closeModal();
+                alert('✅ 子模块添加成功！');
+            });
+        }
+
+        function editDimension(key) {
+            const dim = dimensions[key];
+            showModal('✏️ 编辑子模块', `
+                <div class="form-group">
+                    <label class="form-label">模块ID</label>
+                    <input type="text" class="form-input" value="${key}" readonly style="background: #f3f4f6;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">模块名称</label>
+                    <input type="text" class="form-input" id="editDimName" value="${dim.name}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">图标 Emoji</label>
+                    <input type="text" class="form-input" id="editDimIcon" value="${dim.icon}" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">描述</label>
+                    <textarea class="form-textarea" id="editDimDesc" rows="3">${dim.description}</textarea>
+                </div>
+            `, async function() {
+                dimensions[key] = {
+                    name: document.getElementById('editDimName').value.trim(),
+                    icon: document.getElementById('editDimIcon').value.trim(),
+                    description: document.getElementById('editDimDesc').value.trim()
+                };
+                await saveDimensions();
+                renderDimensionTable();
+                closeModal();
+                alert('✅ 子模块更新成功！');
+            });
+        }
+
+        async function saveDimensions() {
+            try {
+                await fetch('http://localhost:5001/api/dimensions/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ dimensions })
+                });
+            } catch (error) {
+                console.error('保存失败:', error);
+            }
+        }
+
+        // ========== 模板管理 ==========
+        async function loadTemplates() {
+            try {
+                const response = await fetch('http://localhost:5001/api/templates/list');
+                const result = await response.json();
+
+                if (result.success && result.templates) {
+                    templates = result.templates;
+                    renderTemplateTable();
+                }
+            } catch (error) {
+                console.error('加载模板失败:', error);
+                templates = getDefaultTemplates();
+                renderTemplateTable();
+            }
+        }
+
+        function getDefaultTemplates() {
+            return [{
+                id: 'company-article-template',
+                name: '公司研究标准框架',
+                version: '1.0',
+                description: '基于可学习借鉴理念的公司研究标准框架'
+            }];
+        }
+
+        function renderTemplateTable() {
+            const tbody = document.getElementById('templateTableBody');
+            tbody.innerHTML = templates.map(t => `
+                <tr>
+                    <td><strong>${t.name}</strong></td>
+                    <td>${t.version || 'v1.0'}</td>
+                    <td>${t.description || '无描述'}</td>
+                    <td>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="editTemplate('${t.id}')" style="padding: 6px 14px; font-size: 0.85em;">📝 编辑模板</button>
+                            <button class="btn btn-success" onclick="editScript('${t.id}')" style="padding: 6px 14px; font-size: 0.85em;">⚙️ 编辑脚本</button>
+                            <button class="btn btn-secondary" onclick="duplicateTemplate('${t.id}')" style="padding: 6px 14px; font-size: 0.85em;">📋 复制</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function createNewTemplate() {
+            showModal('➕ 创建新模板', `
+                <div class="form-group">
+                    <label class="form-label">模板名称</label>
+                    <input type="text" class="form-input" id="newTemplateName" placeholder="例如: 技术创新研究框架">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">模板版本</label>
+                    <input type="text" class="form-input" id="newTemplateVersion" value="1.0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">模板描述</label>
+                    <textarea class="form-textarea" id="newTemplateDesc" rows="3" placeholder="简要描述模板的用途和特点"></textarea>
+                </div>
+                <div class="warning-box">
+                    ⚠️ 创建后可以在编辑功能中完善模板的章节结构和内容框架
+                </div>
+            `, async function() {
+                const name = document.getElementById('newTemplateName').value.trim();
+                const version = document.getElementById('newTemplateVersion').value.trim();
+                const description = document.getElementById('newTemplateDesc').value.trim();
+
+                if (!name) {
+                    alert('请输入模板名称');
+                    return;
+                }
+
+                const newTemplate = {
+                    id: 'template-' + Date.now(),
+                    name: name,
+                    version: version,
+                    description: description,
+                    meta: {
+                        templateVersion: version,
+                        description: description,
+                        lastUpdate: new Date().toISOString().split('T')[0]
+                    },
+                    sections: []
+                };
+
+                try {
+                    const response = await fetch('http://localhost:5001/api/templates/save', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ templateId: newTemplate.id, template: newTemplate })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('✅ 模板创建成功！');
+                        loadTemplates();
+                        closeModal();
+                    } else {
+                        alert('❌ 创建失败: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('创建模板失败:', error);
+                    alert('❌ 创建失败，请检查后端服务');
+                }
+            });
+        }
+
+        async function editTemplate(templateId) {
+            try {
+                const response = await fetch(`http://localhost:5001/api/templates/get/${templateId}`);
+                const result = await response.json();
+
+                if (!result.success || !result.template) {
+                    alert('❌ 加载模板失败');
+                    return;
+                }
+
+                const template = result.template;
+
+                showModal('✏️ 编辑模板', `
+                    <div class="form-group">
+                        <label class="form-label">模板名称</label>
+                        <input type="text" class="form-input" id="editTemplateName" value="${template.name || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">模板版本</label>
+                        <input type="text" class="form-input" id="editTemplateVersion" value="${template.version || template.meta?.templateVersion || '1.0'}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">模板描述</label>
+                        <textarea class="form-textarea" id="editTemplateDesc" rows="2">${template.description || template.meta?.description || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">模板JSON（高级编辑）</label>
+                        <textarea class="form-textarea" id="editTemplateJSON" rows="15" style="font-family: monospace; font-size: 0.85em;">${JSON.stringify(template, null, 2)}</textarea>
+                        <div style="margin-top: 8px; font-size: 0.85em; color: #ef4444;">
+                            ⚠️ 请谨慎编辑JSON结构，格式错误会导致模板无法使用
+                        </div>
+                    </div>
+                `, async function() {
+                    try {
+                        const jsonText = document.getElementById('editTemplateJSON').value;
+                        const templateData = JSON.parse(jsonText);
+
+                        // 更新基本信息
+                        templateData.name = document.getElementById('editTemplateName').value.trim();
+                        templateData.version = document.getElementById('editTemplateVersion').value.trim();
+                        templateData.description = document.getElementById('editTemplateDesc').value.trim();
+
+                        if (!templateData.meta) templateData.meta = {};
+                        templateData.meta.description = templateData.description;
+                        templateData.meta.templateVersion = templateData.version;
+                        templateData.meta.lastUpdate = new Date().toISOString().split('T')[0];
+
+                        const saveResponse = await fetch('http://localhost:5001/api/templates/save', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ templateId: templateId, template: templateData })
+                        });
+
+                        const saveResult = await saveResponse.json();
+                        if (saveResult.success) {
+                            alert('✅ 模板保存成功！');
+                            loadTemplates();
+                            closeModal();
+                        } else {
+                            alert('❌ 保存失败: ' + saveResult.error);
+                        }
+                    } catch (error) {
+                        alert('❌ JSON格式错误: ' + error.message);
+                    }
+                });
+            } catch (error) {
+                console.error('编辑模板失败:', error);
+                alert('❌ 加载模板失败');
+            }
+        }
+
+        async function editScript(templateId) {
+            try {
+                // 加载生成脚本内容
+                const response = await fetch('http://localhost:5001/api/scripts/get/content-generator');
+                const result = await response.json();
+
+                if (!result.success || !result.script) {
+                    alert('❌ 加载脚本失败');
+                    return;
+                }
+
+                const scriptContent = result.script;
+
+                showModal('⚙️ 编辑生成脚本', `
+                    <div style="margin-bottom: 15px; padding: 12px; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; font-size: 0.9em;">
+                        ⚠️ <strong>高级功能：</strong>此脚本控制整个内容生成流程，包括模板加载、公司选择、AI调用等核心逻辑。
+                        <br>请谨慎修改，语法错误会导致生成功能无法使用。
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">生成脚本 (content-generator.js)</label>
+                        <textarea class="form-textarea" id="editScriptContent" rows="20" style="font-family: 'Consolas', 'Monaco', monospace; font-size: 0.8em; line-height: 1.5;">${scriptContent}</textarea>
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: #e0f2fe; border-radius: 6px; font-size: 0.85em;">
+                        <strong>💡 提示：</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0;">
+                            <li>修改 <code>selectCompany()</code> 方法可以改变公司选择逻辑</li>
+                            <li>修改 <code>buildPrompt()</code> 方法可以调整AI提示词</li>
+                            <li>修改 <code>generateArticle()</code> 方法可以改变HTML输出格式</li>
+                            <li>保存后需要重启服务器才能生效</li>
+                        </ul>
+                    </div>
+                `, async function() {
+                    try {
+                        const newScriptContent = document.getElementById('editScriptContent').value;
+
+                        // 基本语法检查
+                        if (!newScriptContent.includes('class ContentGenerator') || !newScriptContent.includes('module.exports')) {
+                            if (!confirm('⚠️ 脚本结构可能不完整，确定要保存吗？')) {
+                                return;
+                            }
+                        }
+
+                        const saveResponse = await fetch('http://localhost:5001/api/scripts/save/content-generator', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ script: newScriptContent })
+                        });
+
+                        const saveResult = await saveResponse.json();
+                        if (saveResult.success) {
+                            alert('✅ 脚本保存成功！\n\n请重启服务器以使更改生效。');
+                            closeModal();
+                        } else {
+                            alert('❌ 保存失败: ' + saveResult.error);
+                        }
+                    } catch (error) {
+                        alert('❌ 保存失败: ' + error.message);
+                    }
+                });
+            } catch (error) {
+                console.error('加载脚本失败:', error);
+                alert('❌ 加载脚本失败，请检查后端服务');
+            }
+        }
+
+        async function duplicateTemplate(templateId) {
+            try {
+                const response = await fetch(`http://localhost:5001/api/templates/get/${templateId}`);
+                const result = await response.json();
+
+                if (!result.success || !result.template) {
+                    alert('❌ 加载模板失败');
+                    return;
+                }
+
+                const template = result.template;
+                const newName = prompt('请输入新模板名称:', template.name + ' - 副本');
+
+                if (!newName) return;
+
+                const newTemplate = JSON.parse(JSON.stringify(template));
+                newTemplate.id = 'template-' + Date.now();
+                newTemplate.name = newName;
+                if (newTemplate.meta) {
+                    newTemplate.meta.lastUpdate = new Date().toISOString().split('T')[0];
+                }
+
+                const saveResponse = await fetch('http://localhost:5001/api/templates/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ templateId: newTemplate.id, template: newTemplate })
+                });
+
+                const saveResult = await saveResponse.json();
+                if (saveResult.success) {
+                    alert('✅ 模板复制成功！');
+                    loadTemplates();
+                } else {
+                    alert('❌ 复制失败: ' + saveResult.error);
+                }
+            } catch (error) {
+                console.error('复制模板失败:', error);
+                alert('❌ 复制失败');
+            }
+        }
+
+        // ========== 模态框 ==========
+        let modalElement = null;
+
+        function showModal(title, content, onSave) {
+            if (modalElement) {
+                closeModal();
+            }
+
+            modalElement = document.createElement('div');
+            modalElement.style.cssText = 'display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;';
+            modalElement.innerHTML = `
+                <div style="max-width: 800px; margin: 50px auto; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <div style="padding: 25px; border-bottom: 1px solid #e5e7eb;">
+                        <h2 style="font-size: 1.6em; color: #1f2937; margin: 0;">${title}</h2>
+                    </div>
+                    <div style="padding: 25px; max-height: 600px; overflow-y: auto;">
+                        ${content}
+                    </div>
+                    <div style="padding: 20px 25px; border-top: 1px solid #e5e7eb; display: flex; gap: 10px; justify-content: flex-end;">
+                        <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                        <button class="btn btn-primary" id="modalSaveBtn">保存</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modalElement);
+            document.getElementById('modalSaveBtn').onclick = onSave;
+        }
+
+        function closeModal() {
+            if (modalElement) {
+                modalElement.remove();
+                modalElement = null;
+            }
+        }
+        // ========== 系统设置 ==========
+        const API_PROVIDERS = {
+            anthropic: {
+                name: 'Anthropic',
+                baseUrl: 'https://api.anthropic.com',
+                consoleUrl: 'https://console.anthropic.com/',
+                keyPrefix: 'sk-ant-',
+                defaultModel: 'claude-haiku-4-5-20251001',
+                keyPlaceholder: 'sk-ant-api03-xxxxxxxx',
+                hint: '从 Anthropic Console 获取 API Key'
+            },
+            deepseek: {
+                name: 'DeepSeek',
+                baseUrl: 'https://api.deepseek.com/anthropic',
+                consoleUrl: 'https://platform.deepseek.com',
+                keyPrefix: 'sk-',
+                defaultModel: 'deepseek-v4-pro',
+                keyPlaceholder: 'sk-xxxxxxxxxxxxxxxx',
+                hint: '从 DeepSeek Platform 获取 API Key'
+            },
+            custom: {
+                name: '自定义',
+                baseUrl: '',
+                consoleUrl: '',
+                keyPrefix: '',
+                defaultModel: '',
+                keyPlaceholder: 'your-api-key',
+                hint: '自定义 API 提供商'
+            }
+        };
+
+        let apiProfiles = {};
+        let currentProfileId = null;
+
+        function onProviderChange() {
+            const provider = document.getElementById('apiProviderSelect').value;
+            const config = API_PROVIDERS[provider];
+
+            // 更新界面提示信息
+            document.getElementById('apiBaseUrlInput').placeholder = config.baseUrl;
+            document.getElementById('apiKeyInput').placeholder = config.keyPlaceholder;
+            document.getElementById('defaultModelInput').placeholder = config.defaultModel;
+
+            if (provider !== 'custom') {
+                document.getElementById('apiKeyHint').innerHTML = `💡 ${config.hint} - <a href="${config.consoleUrl}" target="_blank" style="color: #667eea;">${config.name} Console</a>`;
+            } else {
+                document.getElementById('apiKeyHint').innerHTML = '💡 自定义 API 提供商的密钥';
+            }
+
+            // 如果是新建方案且没有输入值，使用默认值
+            const profileSelect = document.getElementById('configProfileSelect');
+            if (profileSelect.value === '' && config.baseUrl) {
+                document.getElementById('apiBaseUrlInput').value = config.baseUrl;
+                document.getElementById('defaultModelInput').value = config.defaultModel;
+            }
+        }
+
+        function loadApiProfiles() {
+            const saved = localStorage.getItem('api_profiles');
+            if (saved) {
+                apiProfiles = JSON.parse(saved);
+            }
+
+            // 自动修复错误的 API 地址
+            let needsSave = false;
+            for (const [id, profile] of Object.entries(apiProfiles)) {
+                if (profile.baseUrl && profile.baseUrl.includes('apicc.deepseek.com')) {
+                    console.log(`🔧 修复配置方案 "${profile.name}": ${profile.baseUrl} -> https://api.deepseek.com/anthropic`);
+                    profile.baseUrl = 'https://api.deepseek.com/anthropic';
+                    needsSave = true;
+                }
+            }
+            if (needsSave) {
+                localStorage.setItem('api_profiles', JSON.stringify(apiProfiles));
+                console.log('✅ 已自动修复 API 配置');
+            }
+
+            const activeId = localStorage.getItem('active_profile_id');
+            if (activeId && apiProfiles[activeId]) {
+                currentProfileId = activeId;
+            }
+
+            updateProfileSelect();
+            updateActiveProfileDisplay();
+        }
+
+        function updateProfileSelect() {
+            const select = document.getElementById('configProfileSelect');
+            select.innerHTML = '<option value="">➕ 新建方案</option>';
+
+            for (const [id, profile] of Object.entries(apiProfiles)) {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = profile.name;
+                if (id === currentProfileId) {
+                    option.textContent += ' ⭐';
+                }
+                select.appendChild(option);
+            }
+        }
+
+        function updateActiveProfileDisplay() {
+            const display = document.getElementById('activeProfileDisplay');
+
+            if (currentProfileId && apiProfiles[currentProfileId]) {
+                const profile = apiProfiles[currentProfileId];
+                display.innerHTML = `
+                    <div><strong>方案名称：</strong>${profile.name}</div>
+                    <div><strong>提供商：</strong>${API_PROVIDERS[profile.provider]?.name || profile.provider}</div>
+                    <div><strong>API端点：</strong>${profile.baseUrl}</div>
+                    <div><strong>模型：</strong>${profile.model}</div>
+                `;
+            } else {
+                display.innerHTML = '未配置';
+            }
+        }
+
+        function loadProfile() {
+            const select = document.getElementById('configProfileSelect');
+            const profileId = select.value;
+
+            if (!profileId) {
+                // 新建方案 - 清空表单
+                document.getElementById('profileNameInput').value = '';
+                document.getElementById('apiProviderSelect').value = 'anthropic';
+                document.getElementById('apiBaseUrlInput').value = '';
+                document.getElementById('apiKeyInput').value = '';
+                document.getElementById('defaultModelInput').value = '';
+                onProviderChange();
+                return;
+            }
+
+            const profile = apiProfiles[profileId];
+            if (!profile) return;
+
+            // 加载方案数据到表单
+            document.getElementById('profileNameInput').value = profile.name;
+            document.getElementById('apiProviderSelect').value = profile.provider;
+            document.getElementById('apiBaseUrlInput').value = profile.baseUrl;
+            document.getElementById('apiKeyInput').value = profile.apiKey;
+            document.getElementById('defaultModelInput').value = profile.model;
+
+            onProviderChange();
+        }
+
+        function saveProfile() {
+            const profileName = document.getElementById('profileNameInput').value.trim();
+            const provider = document.getElementById('apiProviderSelect').value;
+            const apiKey = document.getElementById('apiKeyInput').value.trim();
+            const baseUrl = document.getElementById('apiBaseUrlInput').value.trim();
+            const defaultModel = document.getElementById('defaultModelInput').value.trim();
+
+            if (!profileName) {
+                alert('❌ 请输入方案名称');
+                return;
+            }
+
+            if (!apiKey) {
+                alert('❌ 请输入 API Key');
+                return;
+            }
+
+            if (!baseUrl) {
+                alert('❌ 请输入 API 端点地址');
+                return;
+            }
+
+            if (!defaultModel) {
+                alert('❌ 请输入默认模型名称');
+                return;
+            }
+
+            const config = API_PROVIDERS[provider];
+            if (config.keyPrefix && !apiKey.startsWith(config.keyPrefix)) {
+                if (!confirm(`⚠️ API Key 格式可能不正确，通常以 ${config.keyPrefix} 开头。是否继续保存？`)) {
+                    return;
+                }
+            }
+
+            // 生成或使用现有ID
+            const select = document.getElementById('configProfileSelect');
+            let profileId = select.value;
+            if (!profileId) {
+                profileId = 'profile_' + Date.now();
+            }
+
+            // 保存方案
+            apiProfiles[profileId] = {
+                id: profileId,
+                name: profileName,
+                provider: provider,
+                baseUrl: baseUrl,
+                apiKey: apiKey,
+                model: defaultModel,
+                createdAt: apiProfiles[profileId]?.createdAt || new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('api_profiles', JSON.stringify(apiProfiles));
+
+            // 自动激活新保存的方案
+            currentProfileId = profileId;
+            localStorage.setItem('active_profile_id', profileId);
+            localStorage.setItem('anthropic_api_key', apiKey);
+            localStorage.setItem('api_base_url', baseUrl);
+            localStorage.setItem('api_default_model', defaultModel);
+
+            alert('✅ 方案已保存并激活！');
+
+            updateProfileSelect();
+            updateActiveProfileDisplay();
+            select.value = profileId;
+
+            // 清除测试结果
+            document.getElementById('apiTestResult').style.display = 'none';
+        }
+
+        function deleteProfile() {
+            const select = document.getElementById('configProfileSelect');
+            const profileId = select.value;
+
+            if (!profileId) {
+                alert('❌ 请先选择一个方案');
+                return;
+            }
+
+            const profile = apiProfiles[profileId];
+            if (!confirm(`确定要删除方案 "${profile.name}" 吗？`)) {
+                return;
+            }
+
+            delete apiProfiles[profileId];
+            localStorage.setItem('api_profiles', JSON.stringify(apiProfiles));
+
+            // 如果删除的是当前方案，清除当前方案
+            if (profileId === currentProfileId) {
+                currentProfileId = null;
+                localStorage.removeItem('active_profile_id');
+                localStorage.removeItem('anthropic_api_key');
+                localStorage.removeItem('api_base_url');
+                localStorage.removeItem('api_default_model');
+                updateActiveProfileDisplay();
+            }
+
+            alert('✅ 方案已删除！');
+
+            updateProfileSelect();
+            select.value = '';
+            loadProfile();
+        }
+
+        function setAsActive() {
+            const select = document.getElementById('configProfileSelect');
+            const profileId = select.value;
+
+            if (!profileId) {
+                alert('❌ 请先选择或保存一个方案');
+                return;
+            }
+
+            const profile = apiProfiles[profileId];
+            if (!profile) {
+                alert('❌ 方案不存在');
+                return;
+            }
+
+            // 设置为当前方案
+            currentProfileId = profileId;
+            localStorage.setItem('active_profile_id', profileId);
+
+            // 同时更新旧的存储键（向后兼容）
+            localStorage.setItem('anthropic_api_key', profile.apiKey);
+            localStorage.setItem('api_base_url', profile.baseUrl);
+            localStorage.setItem('api_default_model', profile.model);
+
+            alert('✅ 已设置为当前使用的配置！');
+
+            updateProfileSelect();
+            updateActiveProfileDisplay();
+        }
+
+        function loadApiKey() {
+            loadApiProfiles();
+
+            // 如果有当前方案，加载它
+            if (currentProfileId && apiProfiles[currentProfileId]) {
+                document.getElementById('configProfileSelect').value = currentProfileId;
+                loadProfile();
+            } else {
+                // 否则尝试从旧的存储中加载（向后兼容）
+                const apiKey = localStorage.getItem('anthropic_api_key');
+                const baseUrl = localStorage.getItem('api_base_url');
+                const defaultModel = localStorage.getItem('api_default_model');
+
+                if (apiKey) {
+                    document.getElementById('apiKeyInput').value = apiKey;
+                }
+                if (baseUrl) {
+                    document.getElementById('apiBaseUrlInput').value = baseUrl;
+                }
+                if (defaultModel) {
+                    document.getElementById('defaultModelInput').value = defaultModel;
+                }
+
+                onProviderChange();
+            }
+        }
+
+        async function testApiConnection() {
+            const provider = document.getElementById('apiProviderSelect').value;
+            const apiKey = document.getElementById('apiKeyInput').value.trim();
+            const baseUrl = document.getElementById('apiBaseUrlInput').value.trim();
+            const defaultModel = document.getElementById('defaultModelInput').value.trim();
+            const resultDiv = document.getElementById('apiTestResult');
+
+            if (!apiKey) {
+                alert('❌ 请先输入 API Key');
+                return;
+            }
+
+            if (!baseUrl) {
+                alert('❌ 请先输入 API 端点地址');
+                return;
+            }
+
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="info-box" style="background: #fef3c7; border-color: #f59e0b;"><strong>⏳ 测试中...</strong> 正在连接 API...</div>';
+
+            try {
+                // 构建完整的 API 端点
+                const endpoint = baseUrl.endsWith('/') ? baseUrl + 'v1/messages' : baseUrl + '/v1/messages';
+
+                // 创建一个简单的测试请求
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: defaultModel || API_PROVIDERS[provider].defaultModel,
+                        max_tokens: 10,
+                        messages: [{
+                            role: 'user',
+                            content: 'Hi'
+                        }]
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = '<div class="info-box" style="background: #d1fae5; border-color: #10b981;"><strong>✅ 连接成功！</strong> API Key 有效，可以正常使用。<br>模型: ' + (data.model || defaultModel) + '</div>';
+                } else {
+                    const error = await response.json();
+                    resultDiv.innerHTML = `<div class="info-box" style="background: #fee2e2; border-color: #ef4444;"><strong>❌ 连接失败 (${response.status})</strong><br>错误: ${error.error?.message || response.statusText}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="info-box" style="background: #fee2e2; border-color: #ef4444;"><strong>❌ 连接失败</strong><br>错误: ${error.message}</div>`;
+            }
+        }
+
+    </script>
+</body>
+</html>
