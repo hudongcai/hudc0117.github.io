@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages 测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; }
+        .status { padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .info { background: #dbeafe; color: #1e40af; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background: #5568d3; }
+        #result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧪 GitHub Pages + API 服务器测试</h1>
+
+        <div class="status info">
+            <strong>GitHub Pages:</strong> ✅ 已成功加载
+        </div>
+
+        <div class="status info">
+            <strong>API 服务器地址:</strong> https://api.intellake.com:5001
+        </div>
+
+        <button onclick="testAPI()">🔍 测试 API 连接</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://api.intellake.com:5001';
+
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<div class="status info">正在测试 API 连接...</div>';
+
+            try {
+                // 测试 1: 健康检查
+                const response = await fetch(`${API_BASE_URL}/api/test`);
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = '<div class="status success">✅ API 服务器连接成功！</div>';
+
+                    // 测试 2: 获取文章列表
+                    testArticles();
+                } else {
+                    resultDiv.innerHTML = '<div class="status error">❌ API 返回错误</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="status error">
+                        <strong>❌ 连接失败</strong><br>
+                        错误信息: ${error.message}<br><br>
+                        <strong>可能的原因：</strong><br>
+                        1. 服务器未启动<br>
+                        2. 防火墙阻止了 5001 端口<br>
+                        3. SSL 证书问题（自签名证书需要手动信任）<br>
+                        4. CORS 配置问题
+                    </div>
+                `;
+            }
+        }
+
+        async function testArticles() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/articles/by-category?module=ai`);
+                const result = await response.json();
+
+                if (result.success && result.articles) {
+                    const count = result.articles.length;
+                    document.getElementById('result').innerHTML += `
+                        <div class="status success">
+                            ✅ 成功获取文章列表：共 ${count} 篇文章
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('获取文章列表失败:', error);
+            }
+        }
+
+        // 页面加载时显示信息
+        console.log('GitHub Pages URL:', window.location.href);
+        console.log('API Base URL:', API_BASE_URL);
+    </script>
+</body>
+</html>
