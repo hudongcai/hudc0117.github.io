@@ -11,6 +11,7 @@ const PORT = 5001;
 const corsOptions = {
     origin: [
         'https://hudongcai.github.io',
+        'https://intellake.com',
         'http://localhost:5001',
         'http://127.0.0.1:5001'
     ],
