@@ -10,6 +10,7 @@ const PORT = 5001;
 // CORS 配置 - 允许 GitHub Pages 访问
 const corsOptions = {
     origin: [
+        'https://hudc0117.github.io',
         'https://hudongcai.github.io',
         'https://intellake.com',
         'http://localhost:5001',
