@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+server-*.log
+
+# Backup files
+*.backup
+*.backup.*
+.backups/
+
+# Trash
+.trash/
+
+# SSL certificates (private keys should not be committed)
+ssl/
+
+# Data files (optional, depends on your needs)
+data/
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+
+# Build outputs (if any)
+dist/
+build/

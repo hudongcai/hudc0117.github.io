@@ -41,6 +41,9 @@
             padding: 12px 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .nav a {
@@ -51,6 +54,35 @@
 
         .nav a:hover {
             text-decoration: underline;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .settings-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .settings-btn:hover {
+            background: #ffffff;
+            color: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            text-decoration: none;
         }
 
         .container {
@@ -291,6 +323,9 @@
 
     <div class="nav">
         <a href="index.html">← 返回首页</a>
+        <div class="nav-right">
+            <a href="ai-content-generator-v2.html" class="settings-btn">⚙️ 内容生成配置</a>
+        </div>
     </div>
 
     <div class="container">
@@ -488,7 +523,7 @@
             </div>
 
             <!-- 人工智能 -->
-            <div class="module">
+            <div class="module" id="ai-module">
                 <div class="module-header">
                     <div class="module-title">
                         <span class="module-icon">🤖</span>
@@ -497,41 +532,7 @@
                     <a href="ai-module.html" class="more-button">More</a>
                 </div>
                 <div class="news-list">
-                    <div class="news-item">
-                        <div class="news-meta">
-                            <a href="news-detail.html?id=ai-c-openai-20260812" class="news-title">OpenAI完成新一轮战略融资，估值突破千亿美元大关</a>
-                            <span class="news-date">2026-08-12</span>
-                        </div>
-                        <div class="news-description">OpenAI宣布完成新一轮战略融资，总金额达85亿美元，刷新AI行业单轮融资记录。融资后，OpenAI最新估值达到1,570亿美元...</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-meta">
-                            <a href="news-detail.html?id=ai-p-001" class="news-title">AI辅助诊断系统在三甲医院全面部署</a>
-                            <span class="news-date">2026-08-11</span>
-                        </div>
-                        <div class="news-description">基于深度学习的AI医疗影像诊断系统已在全国500多家三甲医院部署应用，覆盖肺癌、乳腺癌、心血管疾病等20多个病种...</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-meta">
-                            <a href="news-detail.html?id=ai-b-001" class="news-title">ChatGPT订阅用户突破5000万，年收入达60亿美元</a>
-                            <span class="news-date">2026-08-11</span>
-                        </div>
-                        <div class="news-description">OpenAI的ChatGPT Plus订阅用户数突破5000万，按每月20美元计算，仅订阅服务年收入就达到120亿美元...</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-meta">
-                            <a href="news-detail.html?id=ai-po-001" class="news-title">欧盟AI法案正式生效，全球首部AI综合性法规</a>
-                            <span class="news-date">2026-08-11</span>
-                        </div>
-                        <div class="news-description">欧盟人工智能法案(EU AI Act)正式生效，这是全球首部全面规范人工智能的法律。法案将AI系统按风险等级分为四类...</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-meta">
-                            <a href="news-detail.html?id=ai-i-001" class="news-title">AI制药平台发现阿尔茨海默病新药，临床试验获突破</a>
-                            <span class="news-date">2026-08-11</span>
-                        </div>
-                        <div class="news-description">使用AI药物发现平台Insilico Medicine研发的阿尔茨海默病新药在二期临床试验中取得重大突破，患者认知功能改善率达65%...</div>
-                    </div>
+                    <p style="text-align: center; color: #9ca3af; padding: 20px;">加载中...</p>
                 </div>
             </div>
 
@@ -685,5 +686,55 @@
         <p>上海智灵湖智能信息科技有限公司</p>
         <p>&copy; 2026 Intellake.com - 智灵湖 版权所有</p>
     </div>
+
+    <script>
+        // API 配置
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:5001'
+            : 'https://intellake.com:5001';
+
+        // 动态加载人工智能模块的文章
+        async function loadAIArticles() {
+            const aiModule = document.querySelector('#ai-module .news-list');
+
+            try {
+                // 获取AI模块的所有文章，取最新的5篇
+                const response = await fetch(`${API_BASE_URL}/api/articles/by-category?module=ai`);
+                const result = await response.json();
+
+                if (result.success && result.articles && result.articles.length > 0) {
+                    const articles = result.articles.slice(0, 5);
+
+                    let html = '';
+                    articles.forEach(article => {
+                        // 根据目录生成正确的路径
+                        const filePath = article.directory === 'articles'
+                            ? `articles/${article.fileName}`
+                            : article.fileName;
+
+                        html += `
+                            <div class="news-item">
+                                <div class="news-meta">
+                                    <a href="${filePath}" class="news-title">${article.title}</a>
+                                    <span class="news-date">${article.date}</span>
+                                </div>
+                                <div class="news-description">${article.description || '暂无描述'}</div>
+                            </div>
+                        `;
+                    });
+
+                    aiModule.innerHTML = html;
+                } else {
+                    aiModule.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 20px;">暂无文章</p>';
+                }
+            } catch (error) {
+                console.error('加载AI文章失败:', error);
+                aiModule.innerHTML = '<p style="text-align: center; color: #ef4444; padding: 20px;">❌ 加载失败</p>';
+            }
+        }
+
+        // 页面加载时执行
+        loadAIArticles();
+    </script>
 </body>
 </html>

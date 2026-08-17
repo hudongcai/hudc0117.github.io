@@ -1,12 +1,25 @@
 const express = require('express');
 const cors = require('cors');
+const https = require('https');
 const path = require('path');
 const fs = require('fs');
 
 const app = express();
 const PORT = 5001;
 
-app.use(cors());
+// CORS 配置 - 允许 GitHub Pages 访问
+const corsOptions = {
+    origin: [
+        'https://hudongcai.github.io',
+        'http://localhost:5001',
+        'http://127.0.0.1:5001'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(path.join(__dirname)));
@@ -716,11 +729,36 @@ function parseArticleCategory(fileName) {
     return { module, type };
 }
 
-app.listen(PORT, () => {
-    console.log('='.repeat(50));
-    console.log('智灵新知 - 内容生成服务');
-    console.log('='.repeat(50));
-    console.log('服务器运行在: http://localhost:' + PORT);
-    console.log('配置中心: http://localhost:' + PORT + '/ai-content-generator-v2.html');
-    console.log('='.repeat(50));
-});
+// 尝试启动 HTTPS 服务器
+const sslCertPath = path.join(__dirname, 'ssl', 'cert.pem');
+const sslKeyPath = path.join(__dirname, 'ssl', 'key.pem');
+
+if (fs.existsSync(sslCertPath) && fs.existsSync(sslKeyPath)) {
+    // 如果存在 SSL 证书，启动 HTTPS 服务器
+    const httpsOptions = {
+        key: fs.readFileSync(sslKeyPath),
+        cert: fs.readFileSync(sslCertPath)
+    };
+
+    https.createServer(httpsOptions, app).listen(PORT, () => {
+        console.log('='.repeat(50));
+        console.log('智灵新知 - 内容生成服务 (HTTPS)');
+        console.log('='.repeat(50));
+        console.log('服务器运行在: https://intellake.com:' + PORT);
+        console.log('配置中心: https://intellake.com:' + PORT + '/ai-content-generator-v2.html');
+        console.log('CORS 允许来源: GitHub Pages');
+        console.log('='.repeat(50));
+    });
+} else {
+    // 否则启动 HTTP 服务器
+    app.listen(PORT, () => {
+        console.log('='.repeat(50));
+        console.log('智灵新知 - 内容生成服务 (HTTP)');
+        console.log('='.repeat(50));
+        console.log('⚠️  未找到 SSL 证书，使用 HTTP 模式');
+        console.log('证书路径: ' + sslCertPath);
+        console.log('服务器运行在: http://localhost:' + PORT);
+        console.log('配置中心: http://localhost:' + PORT + '/ai-content-generator-v2.html');
+        console.log('='.repeat(50));
+    });
+}
