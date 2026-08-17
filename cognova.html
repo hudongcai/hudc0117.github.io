@@ -690,8 +690,8 @@
     <script>
         // API 配置
         const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-            ? 'http://localhost:5001'
-            : 'https://api.intellake.com:5001';
+            ? 'http://localhost:443'
+            : 'https://api.intellake.com';
 
         // 动态加载人工智能模块的文章
         async function loadAIArticles() {

@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 5001;
+const PORT = 443;
 
 // CORS 配置 - 允许 GitHub Pages 访问
 const corsOptions = {
